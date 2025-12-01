@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tip Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Tip Calculator</h1>
+        <form method="post">
+            Total bill: <input type="text" name="bill" required 
+                            value="{{ request.form.get('bill', '') }}">
+            Tip %: <input type="text" name="tip_percentage" required 
+                        value="{{ request.form.get('tip_percentage', '') }}">
+            Number of people: <input type="text" name="people" required 
+                                    value="{{ request.form.get('people', '') }}">
+            <input type="submit" value="Calculate">
+        </form>
+
+
+        {% if result %}
+        <div class="results">
+            <p>Tip amount: {{ tip }}</p>
+            <p>Total bill: {{ total }}</p>
+            <p>Each person should pay: {{ per_person }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
