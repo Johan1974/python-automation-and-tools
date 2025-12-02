@@ -1,39 +1,63 @@
 # Python Automation & Tools
 
-**Praktische Python-projecten en mini-tools** gericht op automation, data cleaning, scraping en kleine scripts voor real-world problemen.  
-Deze repo toont mijn vaardigheden in Python door concrete, werkende projecten die ook freelance-klussen kunnen ondersteunen.
+Een professionele collectie van **Python-scripts en kleine tools** voor automatisering, tekst- en getalverwerking, en workflow-optimalisatie.  
+Deze repository biedt kant-en-klare oplossingen voor bedrijven, freelancers en zelfstandigen die repetitieve taken willen automatiseren of kleine Python-projecten willen inzetten.
+
+## 📂 Projecten en Tools
+
+| Tool / Script | Beschrijving | SEO Keywords |
+|---------------|-------------|--------------|
+| **band-name-generator** | Genereer unieke en creatieve namen voor bands, bedrijven of projecten op basis van inputwoorden. Ideaal voor branding, creatieve sessies of marketingdoeleinden. | Python band name generator, creative name generator, branding tool |
+| **tip_calculator** | Bereken snel en nauwkeurig fooien op basis van totaalbedrag en percentage. Handig voor restaurants, evenementen, horeca of persoonlijke financiële planning. | Python tip calculator, fooi berekenen script, horeca tool |
+| **test_scripts** | Diverse utility-scripts voor kleine automatiseringstaken, tekstmanipulatie en eenvoudige workflow-optimalisatie. | Python automation scripts, beginner Python utilities, workflow automation |
 
 ---
 
-## Projectoverzicht
+## 🚀 Gebruik van de Tools
 
-| Project | Beschrijving |
-|---------|-------------|
-| [Name Formatter](name-formatter/) | Script dat namen netjes formatteert: hoofdletters, spaties verwijderen, voor- en achternamen combineren. |
-| [CSV Cleaner](csv-cleaner/) | Verwijdert lege rijen, dubbele spaties en overtollige komma’s uit CSV-bestanden. |
-| [Contact Import Tool](contact-import-tool/) | Tool om contactgegevens automatisch te importeren en formatteren voor CRM-systemen. |
-| [Web Scraper](web-scraper/) | Simpele scraper om data van websites te verzamelen en opslaan in CSV. |
-
-> **Tip:** Klik op een projectnaam voor de projectmap met code, voorbeeldoutput en gebruiksinstructies.
-
----
-
-## Skills & Tools
-
-- **Python 3.x** – scripting, data cleaning, automation  
-- **CSV / Excel manipulatie** – pandas, csv module  
-- **Web Scraping** – requests, BeautifulSoup, selenium  
-- **Command-line tools** – scripts direct uitvoerbaar  
-- **Best practices** – duidelijke structuur, README’s, Git version control  
-
----
-
-## Installatie
-
-Aanbevolen: gebruik een conda-omgeving:
-
+1. Clone de repository:  
 ```bash
-conda create -n python-tools python=3.12
-conda activate python-tools
-conda env update --file environment.yml
+git clone https://github.com/Johan1974/python-automation-and-tools.git
+cd python-automation-and-tools
+```
 
+2. Navigeer naar het gewenste project en start het script:  
+```bash
+python tip_calculator/tip_calculator.py
+```
+
+3. Volg de instructies in het script. Alle tools zijn **klaar voor direct gebruik** met minimale setup.
+
+---
+
+## 💼 Toepassingen voor Bedrijven en Freelancers
+
+- Automatiseren van repetitieve taken zoals berekeningen, tekst- of bestandsmanipulatie.  
+- Creatieve hulpmiddelen zoals naamgeneratoren voor branding, marketing of projectideeën.  
+- Kleine Python-tools die direct waarde leveren aan kleine bedrijven, startups of zelfstandigen.  
+- Rapid prototyping voor workshops, evenementen of interne bedrijfsprocessen.
+
+---
+
+## 📌 Waarom deze repository
+
+- **Direct inzetbaar:** kant-en-klare scripts voor praktische toepassingen.  
+- **Eenvoudig aanpasbaar:** code is overzichtelijk en kan snel uitgebreid worden.  
+- **SEO-vriendelijk / Marktfocus:** gericht op veelgevraagde micro-opdrachten in Python, automatisering en kleine tools.  
+- **Portfolio-ready:** laat zien dat je Python kunt inzetten voor zakelijke en praktische oplossingen.
+
+---
+
+## 📝 Licentie
+
+MIT License — vrij te gebruiken, aan te passen of te bestuderen.
+
+---
+
+## 📬 Contact en Maatwerk
+
+Wil je een **custom Python-tool**, workflow-automatisering of een project op maat?  
+Neem contact op via GitHub voor zakelijke opdrachten, freelancen of maatwerkoplossingen.  
+
+**Keywords / Tags voor SEO en Freelance:**  
+Python automation, Python scripts, Python tools, workflow automation, business automation, Python mini-projects, small Python utilities, freelance Python projects, Fiverr Python gigs, Upwork Python microjobs
