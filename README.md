@@ -11,9 +11,9 @@ Alle projecten hebben een eigen README.md met **installatie-instructies, voorbee
 
 | Project | Beschrijving | Link |
 |--------|-------------|------|
-| **band-name-generator** | Genereer unieke en creatieve namen voor bands, bedrijven of projecten. Ideaal voor branding, marketing en creatieve sessies. | [band-name-generator](band-name-generator/README.md) |
-| **tip_calculator** | Bereken snel en nauwkeurig fooien op basis van totaalbedrag en percentage. Handig voor horeca, evenementen of persoonlijke financiële planning. | [tip_calculator](tip_calculator/README.md) |
-| **test_scripts** | Diverse utility-scripts voor kleine automatiseringstaken, tekstmanipulatie en workflow-optimalisatie. | [test_scripts](test_scripts/README.md) |
+| **band-name-generator** | Genereer unieke en creatieve namen voor bands, bedrijven of projecten. Ideaal voor branding, marketing en creatieve sessies. | [band-name-generator](band-name-generator/) |
+| **tip_calculator** | Bereken snel en nauwkeurig fooien op basis van totaalbedrag en percentage. Handig voor horeca, evenementen of persoonlijke financiële planning. | [tip_calculator](tip_calculator/) |
+| **test_scripts** | Diverse utility-scripts voor kleine automatiseringstaken, tekstmanipulatie en workflow-optimalisatie. | [test_scripts](test_scripts/) |
 
 ---
 
