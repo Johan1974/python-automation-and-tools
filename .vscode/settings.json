@@ -1,0 +1,23 @@
+{
+  // EDITOR CLEANUP
+  "editor.fontSize": 20,
+  "editor.minimap.enabled": false,
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 500,
+
+  // NO AUTOCOMPLETE (learning mode)
+  "editor.suggestOnTriggerCharacters": false,
+  "editor.quickSuggestions": {
+    "comments": "off",
+    "strings": "off",
+    "other": "off"
+  },
+  "editor.hover.enabled": false,
+  "editor.parameterHints.enabled": false,
+  "python.languageServer": "None",
+
+  // GIT HELPERS
+  "git.autofetch": true,
+  "git.enableSmartCommit": true,
+  "git.openRepositoryInParentFolders": "always"
+}
