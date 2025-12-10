@@ -30,7 +30,9 @@ jobs:
         pip install pandas numpy pytest
 
     - name: Run unit tests
-      run: pytest -v tests/
+      run: |
+        pytest -v csv-cleaner/tests/
+
 
     - name: Ensure output folder exists
       run: mkdir -p csv-cleaner/samples/output
