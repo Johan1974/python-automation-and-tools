@@ -2,7 +2,7 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
-[![GitHub Repo](https://img.shields.io/badge/github-Johan1974-black?logo=github)](https://github.com/Johan1974)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-csv--cleaner-blue?logo=github)](https://github.com/Johan1974/python-automation-and-tools/tree/main/csv-cleaner)
 
 Clean, normalize, and prettify messy CSV files with this **Python-based CSV cleaner**.
 Ideal for **data analysts, developers, and data scientists** who want to **remove duplicates, fill missing values, and standardize CSV data** quickly and efficiently.
@@ -11,11 +11,11 @@ Ideal for **data analysts, developers, and data scientists** who want to **remov
 
 ## Why Use This Tool?
 
-* **Save hours of manual CSV cleaning**
-* **Automatically detect numeric columns** stored as text
-* **Fill missing values intelligently** for strings and numbers
-* **Remove duplicate rows**
-* **Pretty-print CSVs** in terminal or save as formatted ASCII tables
+* Save hours of manual CSV cleaning
+* Automatically detect numeric columns stored as text
+* Fill missing values intelligently for strings and numbers
+* Remove duplicate rows
+* Pretty-print CSVs in terminal or save as formatted ASCII tables
 * Works with **any CSV**, even large and messy datasets
 
 ---
@@ -49,7 +49,7 @@ pip install pandas numpy
 
 ## Installation
 
-Clone the repository:
+Clone the repository and navigate directly to the CSV cleaner folder:
 
 ```bash
 git clone [https://github.com/Johan1974/python-automation-and-tools.git](https://github.com/Johan1974/python-automation-and-tools.git)
@@ -68,14 +68,14 @@ python3 cleaner.py --in samples/before.csv
 
 ### Optional Command-Line Flags
 
-| Option           | Description                                          | Default                               |
-| ---------------- | ---------------------------------------------------- | ------------------------------------- |
-| `--in`           | Input CSV file path                                  | *Required*                            |
-| `--out`          | Output CSV file path                                 | `<input>_cleaned.csv` if not provided |
-| `--fill-strings` | Fill missing string values with this                 | `Unknown`                             |
-| `--fill-numbers` | Fill missing numeric values (`mean`, `zero`, `none`) | `mean`                                |
-| `--preview`      | Preview changes only, do not save                    | N/A                                   |
-| `--pretty-out`   | Save a pretty ASCII table to a file                  | `<input>_pretty.txt` if not provided  |
+| Option           | Description                                          | Default                                           |
+| ---------------- | ---------------------------------------------------- | ------------------------------------------------- |
+| `--in`           | Input CSV file path                                  | *Required*                                        |
+| `--out`          | Output CSV file path                                 | `<input>_cleaned.csv` if not provided             |
+| `--fill-strings` | Fill missing string values with this                 | `Unknown`                                         |
+| `--fill-numbers` | Fill missing numeric values (`mean`, `zero`, `none`) | `mean`                                            |
+| `--preview`      | Preview changes only, do not save                    | N/A                                               |
+| `--pretty-out`   | Save a pretty ASCII table to a file                  | Automatically generated with `_pretty.txt` suffix |
 
 ---
 
@@ -92,7 +92,7 @@ python3 cleaner.py --in samples/before.csv
 
 **Terminal Preview After Cleaning:**
 
-```text
+```
 name       email                  age   city
 --------------------------------------------
 
@@ -134,4 +134,4 @@ MIT License
 * Missing numeric values can be filled by mean, zero, or left as-is.
 * Pretty-printing helps quickly inspect your data without opening Excel.
 * Works on **large CSVs** with consistent results.
-  ```
+* All output files (cleaned CSV and pretty ASCII table) are saved in the **same folder as the input file** unless a different path is specified.
