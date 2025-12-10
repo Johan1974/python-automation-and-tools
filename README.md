@@ -1,50 +1,62 @@
-# Python Automation & Tools
+# 🚀 Python Automation & Tools – Freelance-Ready Mini Projects
 
-Een professionele verzameling van **Python-scripts en kleine tools** voor automatisering, tekst- en getalverwerking, en workflow-optimalisatie.  
-Deze repository biedt kant-en-klare oplossingen voor bedrijven, freelancers en zelfstandigen die repetitieve taken willen automatiseren of kleine Python-projecten willen inzetten.
+Welcome to **Python Automation & Tools** – a curated collection of **Python scripts and small utilities** designed to save time, automate workflows, and boost productivity for freelancers, startups, and small businesses.  
 
----
-
-## 📂 Projecten Overzicht
-
-Alle projecten hebben een eigen README.md met **installatie-instructies, voorbeelden en gebruikstips**. Klik op de projectnaam om direct naar de map te gaan.
-
-| Project | Beschrijving | Link |
-|--------|-------------|------|
-| **band-name-generator** | Genereer unieke en creatieve namen voor bands, bedrijven of projecten. Ideaal voor branding, marketing en creatieve sessies. | [band-name-generator](band-name-generator/) |
-| **tip_calculator** | Bereken snel en nauwkeurig fooien op basis van totaalbedrag en percentage. Handig voor horeca, evenementen of persoonlijke financiële planning. | [tip_calculator](tip_calculator/) |
-| **test_scripts** | Diverse utility-scripts voor kleine automatiseringstaken, tekstmanipulatie en workflow-optimalisatie. | [test_scripts](test_scripts/) |
+These ready-to-use Python projects are perfect for **workflow automation, business process optimization, data processing, and creative problem solving**.
 
 ---
 
-## 💡 Toepassingen
+## 📂 Featured Projects
 
-- Automatiseren van repetitieve taken: berekeningen, tekst- of bestandsmanipulatie.  
-- Creatieve tools zoals naamgeneratoren voor branding of projectideeën.  
-- Kleine Python-tools direct inzetbaar voor startups, kleine bedrijven of freelancers.  
-- Rapid prototyping voor workshops, interne bedrijfsprocessen of events.
+Each project includes its own README with **installation instructions, usage examples, and pro tips**. Click the project name to explore and run instantly.
 
----
+### 🟢 Band Name Generator
+Generate unique and creative names for bands, businesses, or projects. Perfect for **branding, marketing campaigns, and creative brainstorming**.  
+**Keywords:** Python tools, creative automation, brand name generator  
+[Explore →](band-name-generator/)
 
-## 🚀 Waarom deze repository
+### 🟢 Tip Calculator
+Quickly calculate tips based on totals and percentages. Ideal for **restaurants, events, or personal finance management**.  
+**Keywords:** Python mini-project, finance automation, Python scripts  
+[Explore →](tip_calculator/)
 
-- **Direct inzetbaar:** scripts en tools zijn klaar voor gebruik.  
-- **Eenvoudig aanpasbaar:** overzichtelijke code, makkelijk uitbreidbaar.  
-- **SEO-vriendelijk / marktfocus:** gericht op veelgevraagde micro-opdrachten in Python, automatisering en kleine tools.  
-- **Portfolio-ready:** laat zien dat je Python kunt inzetten voor praktische en zakelijke toepassingen.
+### 🟢 CSV Cleaner
+Automatically clean and format CSV files. Simplify **data preprocessing, reporting, and workflow optimization** for business projects.  
+**Keywords:** Python automation, data cleaning, workflow optimization  
+[Explore →](csv-cleaner/)
 
----
-
-## 📬 Contact & Maatwerk
-
-Wil je een **custom Python-tool**, workflow-automatisering of een project op maat?  
-Neem contact op via GitHub voor zakelijke opdrachten, freelancen of maatwerkoplossingen.  
-
-**SEO Keywords / Tags voor Freelance & Organic Search:**  
-Python automation, Python scripts, Python tools, workflow automation, business automation, Python mini-projects, small Python utilities, freelance Python projects, Fiverr Python gigs, Upwork Python microjobs
+### 🟢 Test Scripts
+A collection of **utility scripts** for small automation tasks, text manipulation, and workflow improvements. Perfect for prototyping or daily repetitive tasks.  
+**Keywords:** Python utilities, automation scripts, freelance Python projects  
+[Explore →](test_scripts/)
 
 ---
 
-## 📝 Licentie
+## 💡 Why Use These Python Tools?
 
-MIT License — vrij te gebruiken, aan te passen of te bestuderen.
+- **Automate repetitive tasks:** calculations, file handling, text processing, and reporting.  
+- **Boost productivity:** small tools that save hours of manual work.  
+- **Creative solutions:** name generators and workflow enhancers for business and events.  
+- **Portfolio & freelance ready:** showcase Python skills to clients, businesses, or agencies.  
+
+---
+
+## 🔥 Ready for Freelance Work & Custom Projects
+
+Need a **custom Python automation tool** or workflow optimization for your business?  
+I provide **bespoke Python solutions** for freelancers, startups, and small businesses:  
+
+- Workflow automation & business process scripts  
+- Data cleaning, reporting, and CSV/Excel tools  
+- Creative generators and utility scripts  
+
+**Contact:** Reach out via GitHub for freelance gigs or custom projects.  
+
+**SEO Keywords / Tags:** Python automation, Python scripts, Python tools, workflow automation, business automation, Python mini-projects, small Python utilities, freelance Python projects, Fiverr Python gigs, Upwork Python microjobs  
+
+---
+
+## 📝 License
+
+MIT License — free to use, modify, or study.
+
