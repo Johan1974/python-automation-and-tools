@@ -24,3 +24,5 @@ venv/
 # Data folders (optional: don't commit large input files)
 data/input/
 data/output/
+
+.pytest_cache/
