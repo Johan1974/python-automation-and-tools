@@ -1,0 +1,8 @@
+Name , Email , Age , City
+John Doe , john@example.com , 30 , New York
+Jane Smith, jane.smith@example.com, 25, Los Angeles
+John Doe , john@example.com , 30 , New York
+Alice , alice@example.com, , Chicago
+Bob, bob@example.com ,40,
+, missing@example.com, 22, Miami
+Charlie, charlie@example.com, 35, San Francisco

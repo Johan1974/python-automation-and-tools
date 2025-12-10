@@ -1,23 +1,27 @@
 {
-  // EDITOR CLEANUP
+  // --- Editor basics ---
   "editor.fontSize": 20,
   "editor.minimap.enabled": false,
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 500,
 
-  // NO AUTOCOMPLETE (learning mode)
-  "editor.suggestOnTriggerCharacters": false,
+  // --- Minimal autocomplete / dot-completion only ---
+  "editor.suggestOnTriggerCharacters": true,
   "editor.quickSuggestions": {
-    "comments": "off",
-    "strings": "off",
-    "other": "off"
+    "comments": false,
+    "strings": false,
+    "other": false
   },
+  "editor.suggest.showWords": false,
+  "editor.suggest.showSnippets": false,
+  "editor.suggest.showFunctions": true,
+  "editor.suggest.showVariables": true,
   "editor.hover.enabled": false,
   "editor.parameterHints.enabled": false,
-  "python.languageServer": "None",
 
-  // GIT HELPERS
-  "git.autofetch": true,
-  "git.enableSmartCommit": true,
-  "git.openRepositoryInParentFolders": "always"
+  // --- Python settings ---
+  "python.languageServer": "Pylance",
+  "python.analysis.completeFunctionParens": false,
+  "python.analysis.useLibraryCodeForTypes": false,
+  "python.analysis.autoSearchPaths": false
 }
