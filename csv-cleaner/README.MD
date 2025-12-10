@@ -3,56 +3,56 @@
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-csv--cleaner-blue?logo=github)](https://github.com/Johan1974/python-automation-and-tools/tree/main/csv-cleaner)
+[![CSV Cleaner CI](https://github.com/Johan1974/python-automation-and-tools/actions/workflows/csv_cleaner_ci.yml/badge.svg)](https://github.com/Johan1974/python-automation-and-tools/actions/workflows/csv_cleaner_ci.yml)
 
 Clean, normalize, and prettify messy CSV files with this **Python-based CSV cleaner**.
-Ideal for **data analysts, developers, and data scientists** who want to **remove duplicates, fill missing values, and standardize CSV data** quickly and efficiently.
+Ideal for **data analysts, developers, and data scientists** who want to quickly remove duplicates, fill missing values, and standardize CSV data.
 
 ---
 
 ## Why Use This Tool?
 
-* Save hours of manual CSV cleaning
-* Automatically detect numeric columns stored as text
-* Fill missing values intelligently for strings and numbers
-* Remove duplicate rows
-* Pretty-print CSVs in terminal or save as formatted ASCII tables
-* Works with **any CSV**, even large and messy datasets
+- Save hours of manual CSV cleaning  
+- Automatically detect numeric columns stored as text  
+- Fill missing values for strings and numbers  
+- Remove duplicate rows  
+- Pretty-print cleaned CSVs in your terminal  
+- Save formatted ASCII tables for quick reviews  
+- Works with **any CSV**, even large datasets  
 
 ---
 
 ## Features
 
-* Trim extra spaces from column names and string values
-* Detect numeric columns stored as strings and convert them
-* Fill missing string values with default (`Unknown`) or user-defined value
-* Fill missing numeric values using **mean**, `0`, or leave as-is
-* Remove duplicate rows automatically
-* Optional **pretty ASCII output**
-* Auto-generate output filename if not provided
-* Fully **CLI-based** for automation
+- Strip spaces from column names  
+- Auto-detect and convert numeric fields  
+- Fill missing string values using a default or custom value  
+- Fill missing numeric values using mean, zero, or skip  
+- Remove duplicate rows  
+- Optional pretty ASCII rendering  
+- Output filenames are auto-generated  
+- Clean, fast, automation-friendly CLI  
 
 ---
 
 ## Requirements
 
-* Python 3.8+
-* [pandas](https://pandas.pydata.org/)
-* [numpy](https://numpy.org/)
+- Python 3.8+
+- pandas  
+- numpy  
 
-Install dependencies:
+Install:
 
 ```bash
 pip install pandas numpy
-```
+````
 
 ---
 
 ## Installation
 
-Clone the repository and navigate directly to the CSV cleaner folder:
-
 ```bash
-git clone [https://github.com/Johan1974/python-automation-and-tools.git](https://github.com/Johan1974/python-automation-and-tools.git)
+git clone https://github.com/Johan1974/python-automation-and-tools.git
 cd python-automation-and-tools/csv-cleaner
 ```
 
@@ -63,60 +63,113 @@ cd python-automation-and-tools/csv-cleaner
 Run the cleaner with the required input file:
 
 ```bash
-python3 cleaner.py --in samples/before.csv
+python3 src/cleaner.py --in samples/input/example.csv
 ```
 
-### Optional Command-Line Flags
+### Command-Line Options
 
-| Option           | Description                                          | Default                                           |
-| ---------------- | ---------------------------------------------------- | ------------------------------------------------- |
-| `--in`           | Input CSV file path                                  | *Required*                                        |
-| `--out`          | Output CSV file path                                 | `<input>_cleaned.csv` if not provided             |
-| `--fill-strings` | Fill missing string values with this                 | `Unknown`                                         |
-| `--fill-numbers` | Fill missing numeric values (`mean`, `zero`, `none`) | `mean`                                            |
-| `--preview`      | Preview changes only, do not save                    | N/A                                               |
-| `--pretty-out`   | Save a pretty ASCII table to a file                  | Automatically generated with `_pretty.txt` suffix |
+| Option           | Description                                  | Default               |
+| ---------------- | -------------------------------------------- | --------------------- |
+| `--in`           | Input CSV file path                          | *Required*            |
+| `--out`          | Output CSV file path                         | `<input>_cleaned.csv` |
+| `--fill-strings` | Value to replace missing string fields       | `Unknown`             |
+| `--fill-numbers` | Numeric fill method (`mean`, `zero`, `none`) | `mean`                |
+| `--preview`      | Show cleaning results but don't save         | N/A                   |
+| `--pretty-out`   | ASCII preview output path                    | `<input>_pretty.txt`  |
+
+Output files are automatically written to the **same folder as the input file** unless overridden.
 
 ---
 
-## Demo ASCII Preview
-
-**Input CSV:**
-
-| Name       | Email                                                   | Age | City        |
-| ---------- | ------------------------------------------------------- | --- | ----------- |
-| John Doe   | [john@example.com](mailto:john@example.com)             | 30  | New York    |
-| Jane Smith | [jane.smith@example.com](mailto:jane.smith@example.com) | 25  | Los Angeles |
-| Alice      | [alice@example.com](mailto:alice@example.com)           |     | Chicago     |
-| Bob        | [bob@example.com](mailto:bob@example.com)               | 40  |             |
-
-**Terminal Preview After Cleaning:**
+## Example: ASCII Preview
 
 ```
 name       email                  age   city
 --------------------------------------------
 
-John Doe   [john@example.com](mailto:john@example.com)       30    New York
-Jane Smith [jane.smith@example.com](mailto:jane.smith@example.com) 25    Los Angeles
-Alice      [alice@example.com](mailto:alice@example.com)      31    Chicago
-Bob        [bob@example.com](mailto:bob@example.com)        40    Unknown
+John Doe   john@example.com       30    New York
+Jane Smith jane.smith@example.com 25    Los Angeles
+Alice      alice@example.com      31    Chicago
+Bob        bob@example.com        40    Unknown
 ```
 
 ---
 
-## Who Is This For?
+## Running Tests Locally
 
-* Data analysts cleaning CSV exports from Excel, CRM, ERP, etc.
-* Python developers automating data preprocessing
-* Data scientists needing quick CSV fixes
-* Freelancers building data automation pipelines for clients
+Run all unit tests:
+
+```bash
+pytest -v csv-cleaner/tests/
+```
+
+Run an integration test manually:
+
+```bash
+python3 src/cleaner.py --in samples/input/example.csv
+```
+
+Make sure dependencies are installed:
+
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
-## Contact / Custom Solutions
+## CI/CD Pipeline
 
-Looking for **custom CSV cleaning tools or Python automation scripts**?
-Reach out on [GitHub](https://github.com/Johan1974) — professional consulting and freelance solutions available.
+A fully automated GitHub Actions workflow runs on every push:
+
+* Unit testing (`pytest`)
+* CSV cleaner integration testing
+* Output validation
+
+Workflow file: `.github/workflows/csv_cleaner_ci.yml`
+
+---
+
+## Contributing
+
+Contributions are welcome — especially improvements to cleaning logic or new test coverage.
+
+1. Fork the repo
+2. Create a feature branch
+3. Add or update tests
+4. Submit a pull request
+
+All PRs automatically run through CI.
+
+---
+
+## Roadmap
+
+Planned enhancements:
+
+* Support for TSV, JSON, and Excel formats
+* Column-type inference improvements
+* Duplicate-row audit report
+* Optional logfile output
+* GUI wrapper (desktop utility)
+* Publish to PyPI (`pip install csv-cleaner`)
+
+Suggestions are welcome.
+
+---
+
+## Freelance & Custom Automation
+
+Need a custom CSV transformation tool, automation script, or data-cleaning workflow?
+
+I build:
+
+* ETL pipelines
+* Data quality automation
+* Python CLI utilities
+* Custom CSV/Excel normalization tools
+
+Interested?
+Contact me on GitHub: **[https://github.com/Johan1974](https://github.com/Johan1974)**
 
 ---
 
@@ -124,14 +177,4 @@ Reach out on [GitHub](https://github.com/Johan1974) — professional consulting 
 
 MIT License
 
----
-
-## Notes
-
-* Duplicate rows are automatically removed.
-* Numeric columns stored as strings are detected and converted.
-* Missing string values default to `"Unknown"` (or your custom value).
-* Missing numeric values can be filled by mean, zero, or left as-is.
-* Pretty-printing helps quickly inspect your data without opening Excel.
-* Works on **large CSVs** with consistent results.
-* All output files (cleaned CSV and pretty ASCII table) are saved in the **same folder as the input file** unless a different path is specified.
+```
