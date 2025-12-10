@@ -38,9 +38,12 @@ def auto_detect_numeric(df):
 
 def fill_strings(df, fill_value="Unknown"):
     for col in df.select_dtypes(include=['object']):
+        # Replace NaN / None first
+        df[col] = df[col].replace([None, '', 'nan', 'NaN'], fill_value)
+        # Strip strings (only for non-null entries)
         df[col] = df[col].astype(str).str.strip()
-        df[col] = df[col].replace(['', 'nan', 'NaN'], fill_value)
     return df
+
 
 def fill_numbers(df, method="mean"):
     for col in df.select_dtypes(include=[np.number]):

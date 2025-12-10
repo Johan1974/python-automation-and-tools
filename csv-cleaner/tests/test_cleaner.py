@@ -1,6 +1,13 @@
 import os
+import sys
 import pandas as pd
-from src.cleaner import (
+
+# Add src folder to Python path so imports work
+current_dir = os.path.dirname(os.path.abspath(__file__))
+src_dir = os.path.join(current_dir, "../src")
+sys.path.insert(0, src_dir)
+
+from cleaner import (
     normalize_column_names,
     auto_detect_numeric,
     fill_strings,
