@@ -2,11 +2,11 @@ name: CSV Cleaner CI
 
 on:
   push:
-    paths:
-      - 'csv-cleaner/**'
+    # paths:
+    #   - 'csv-cleaner/**'
   pull_request:
-    paths:
-      - 'csv-cleaner/**'
+    # paths:
+    #   - 'csv-cleaner/**'
 
 jobs:
   test:
