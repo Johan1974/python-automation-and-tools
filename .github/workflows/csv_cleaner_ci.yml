@@ -1,0 +1,67 @@
+name: CSV Cleaner CI
+
+on:
+  push:
+    paths:
+      - 'csv-cleaner/**'
+  pull_request:
+    paths:
+      - 'csv-cleaner/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.11]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pandas numpy pytest
+
+    - name: Run unit tests
+      run: pytest -v tests/
+
+    - name: Ensure output folder exists
+      run: mkdir -p csv-cleaner/samples/output
+
+    - name: Run CSV Cleaner on all input files (preview)
+      run: |
+        for csv_file in csv-cleaner/samples/input/*.csv; do
+          echo "Previewing $csv_file..."
+          python csv-cleaner/src/cleaner.py --in "$csv_file" --preview
+        done
+
+    - name: Run CSV Cleaner on all input files (save outputs)
+      run: |
+        for csv_file in csv-cleaner/samples/input/*.csv; do
+          echo "Processing $csv_file..."
+          python csv-cleaner/src/cleaner.py --in "$csv_file"
+        done
+
+    - name: Verify outputs
+      run: |
+        echo "Listing output folder contents:"
+        ls -l csv-cleaner/samples/output/
+        set -e
+        for csv_file in csv-cleaner/samples/input/*.csv; do
+          base_name=$(basename "$csv_file" .csv)
+          if [ ! -f "csv-cleaner/samples/output/${base_name}_cleaned.csv" ]; then
+            echo "Error: cleaned CSV missing for $base_name"
+            exit 1
+          fi
+          if [ ! -f "csv-cleaner/samples/output/${base_name}_pretty.txt" ]; then
+            echo "Error: pretty file missing for $base_name"
+            exit 1
+          fi
+        done
