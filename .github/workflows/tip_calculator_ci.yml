@@ -1,4 +1,4 @@
-name: Tip Calculator – Tests
+name: Tip Calculator – CI & Tests
 
 on:
   push:
@@ -28,6 +28,6 @@ jobs:
           pip install flask
 
       - name: Run unit tests
-        working-directory: ./tip_calculator
         run: |
-          python -m unittest discover -s tests -p "test_*.py"
+          # Ensure tip_calculator package is importable
+          PYTHONPATH=$(pwd) python -m unittest discover -s tip_calculator/tests -p "test_*.py"
