@@ -15,7 +15,7 @@ def generate_band_name(city: str, pet_name: str) -> str:
     """
     Generate a band name by combining the city and pet name.
     """
-    return f"{city} {pet_name}"
+    return f"{city.strip()} {pet_name.strip()}"
 
 def main():
     """

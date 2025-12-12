@@ -7,7 +7,7 @@ class TestBandNameGenerator(unittest.TestCase):
         self.assertEqual(generate_band_name("Utrecht", "Tony"), "Utrecht Tony")
 
     def test_handles_whitespace(self):
-        self.assertEqual(generate_band_name("  Paris  ", "  Luna  "), "  Paris    Luna  ")
+        self.assertEqual(generate_band_name("  Paris  ", "  Luna  "), "Paris Luna")
 
     def test_empty_input(self):
         self.assertEqual(generate_band_name("", ""), " ")
