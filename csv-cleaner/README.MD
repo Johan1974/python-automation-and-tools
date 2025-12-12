@@ -1,47 +1,48 @@
 # Python CSV Cleaner & Data Preprocessing CLI Tool
 
-[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
-[![GitHub Repo](https://img.shields.io/badge/GitHub-csv--cleaner-blue?logo=github)](https://github.com/Johan1974/python-automation-and-tools/tree/main/csv-cleaner)
-[![CSV Cleaner CI](https://github.com/Johan1974/python-automation-and-tools/actions/workflows/csv_cleaner_ci.yml/badge.svg)](https://github.com/Johan1974/python-automation-and-tools/actions/workflows/csv_cleaner_ci.yml)
+![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
+![License: MIT](https://img.shields.io/badge/License-MIT-green)
+![CI](https://github.com/Johan1974/python-automation-and-tools/actions/workflows/csv_cleaner_ci.yml/badge.svg)
 
-Clean, normalize, and prettify messy CSV files with this **Python-based CSV cleaner**.
-Ideal for **data analysts, developers, and data scientists** who want to quickly remove duplicates, fill missing values, and standardize CSV data.
+**CSV Cleaner** is a Python CLI tool for cleaning, normalizing, and prettifying CSV files.  
+Ideal for **data analysts, developers, and data scientists** who want to remove duplicates, fill missing values, and standardize CSV data quickly and reliably.
+
+**GitHub Repository:** [https://github.com/Johan1974/python-automation-and-tools/tree/main/csv-cleaner](https://github.com/Johan1974/python-automation-and-tools/tree/main/csv-cleaner)
 
 ---
 
-## Why Use This Tool?
+## 💡 Why Use This Tool?
 
 - Save hours of manual CSV cleaning  
-- Automatically detect numeric columns stored as text  
+- Auto-detect numeric columns stored as text  
 - Fill missing values for strings and numbers  
 - Remove duplicate rows  
 - Pretty-print cleaned CSVs in your terminal  
 - Save formatted ASCII tables for quick reviews  
-- Works with **any CSV**, even large datasets  
+- Works with **any CSV**, including large datasets
 
 ---
 
-## Features
+## 🎮 Features
 
 - Strip spaces from column names  
 - Auto-detect and convert numeric fields  
 - Fill missing string values using a default or custom value  
 - Fill missing numeric values using mean, zero, or skip  
 - Remove duplicate rows  
-- Optional pretty ASCII rendering  
-- Output filenames are auto-generated  
-- Clean, fast, automation-friendly CLI  
+- Optional ASCII preview  
+- Output filenames auto-generated  
+- Lightweight, fast, automation-friendly CLI
 
 ---
 
-## Requirements
+## 🛠 Requirements
 
-- Python 3.8+
-- pandas  
-- numpy  
+- Python 3.8+  
+- `pandas`  
+- `numpy`  
 
-Install:
+Install dependencies:
 
 ```bash
 pip install pandas numpy
@@ -49,7 +50,7 @@ pip install pandas numpy
 
 ---
 
-## Installation
+## 🚀 Installation
 
 ```bash
 git clone https://github.com/Johan1974/python-automation-and-tools.git
@@ -74,19 +75,16 @@ python3 src/cleaner.py --in samples/input/example.csv
 | `--out`          | Output CSV file path                         | `<input>_cleaned.csv` |
 | `--fill-strings` | Value to replace missing string fields       | `Unknown`             |
 | `--fill-numbers` | Numeric fill method (`mean`, `zero`, `none`) | `mean`                |
-| `--preview`      | Show cleaning results but don't save         | N/A                   |
+| `--preview`      | Show cleaning results without saving         | N/A                   |
 | `--pretty-out`   | ASCII preview output path                    | `<input>_pretty.txt`  |
-
-Output files are automatically written to the **same folder as the input file** unless overridden.
 
 ---
 
-## Example: ASCII Preview
+## 🖥 Example: ASCII Preview
 
 ```
 name       email                  age   city
 --------------------------------------------
-
 John Doe   john@example.com       30    New York
 Jane Smith jane.smith@example.com 25    Los Angeles
 Alice      alice@example.com      31    Chicago
@@ -95,7 +93,7 @@ Bob        bob@example.com        40    Unknown
 
 ---
 
-## Running Tests Locally
+## 🧪 Running Tests Locally
 
 Run all unit tests:
 
@@ -103,7 +101,7 @@ Run all unit tests:
 pytest -v csv-cleaner/tests/
 ```
 
-Run an integration test manually:
+Run an integration test:
 
 ```bash
 python3 src/cleaner.py --in samples/input/example.csv
@@ -117,7 +115,7 @@ pip install -r requirements.txt
 
 ---
 
-## CI/CD Pipeline
+## ⚙️ CI/CD Pipeline
 
 A fully automated GitHub Actions workflow runs on every push:
 
@@ -129,9 +127,9 @@ Workflow file: `.github/workflows/csv_cleaner_ci.yml`
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
-Contributions are welcome — especially improvements to cleaning logic or new test coverage.
+Contributions are welcome! Especially improvements to cleaning logic or test coverage.
 
 1. Fork the repo
 2. Create a feature branch
@@ -142,24 +140,24 @@ All PRs automatically run through CI.
 
 ---
 
-## Roadmap
+## 📅 Roadmap
 
 Planned enhancements:
 
 * Support for TSV, JSON, and Excel formats
-* Column-type inference improvements
+* Improved column-type inference
 * Duplicate-row audit report
 * Optional logfile output
-* GUI wrapper (desktop utility)
+* Desktop GUI wrapper
 * Publish to PyPI (`pip install csv-cleaner`)
 
 Suggestions are welcome.
 
 ---
 
-## Freelance & Custom Automation
+## 📬 Freelance & Custom Automation
 
-Need a custom CSV transformation tool, automation script, or data-cleaning workflow?
+Need a **custom CSV transformation tool**, automation script, or data-cleaning workflow?
 
 I build:
 
@@ -168,13 +166,10 @@ I build:
 * Python CLI utilities
 * Custom CSV/Excel normalization tools
 
-Interested?
-Contact me on GitHub: **[https://github.com/Johan1974](https://github.com/Johan1974)**
+Contact me via GitHub: **[https://github.com/Johan1974](https://github.com/Johan1974)**
 
 ---
 
-## License
+## 📝 License
 
-MIT License
-
-```
+MIT License — free to use, modify, and distribute
