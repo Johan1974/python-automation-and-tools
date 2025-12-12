@@ -1,4 +1,26 @@
-print('''
+# treasure.py
+def choose_first_path(choice: str) -> str:
+    choice = choice.strip().lower()
+    return "lake" if choice == "left" else "hole"
+
+def choose_second_path(choice: str) -> str:
+    choice = choice.strip().lower()
+    return "house" if choice == "wait" else "trout"
+
+def choose_door(choice: str) -> str:
+    choice = choice.strip().lower()
+    if choice == "red":
+        return "fire"
+    elif choice == "blue":
+        return "beasts"
+    elif choice == "yellow":
+        return "treasure"
+    else:
+        return "invalid"
+
+
+def main():
+    print('''
       *******************************************************************************
           |                   |                  |                     |
  _________|________________.=""_;=.______________|_____________________|_______
@@ -13,36 +35,38 @@ print('''
 |                   | |o;    `"-.o`"=._``  '` " ,__.--o;   |
 |___________________|_| ;     (#) `-.o `"=.`_.--"_o.-; ;___|___________________
 ____/______/______/___|o;._    "      `".o|o_.--"    ;o;____/______/______/____
-/______/______/______/_"=._o--._        ; | ;        ; ;/______/______/______/_
+/______/______/______/_"=._o--._        ; | ;        ; ;/______/______/______/_ 
 ____/______/______/______/__"=._o--._   ;o|o;     _._;o;____/______/______/____
-/______/______/______/______/____"=._o._; | ;_.--"o.--"_/______/______/______/_
+/______/______/______/______/____"=._o._; | ;_.--"o.--"_/______/______/______/_ 
 ____/______/______/______/______/_____"=.o|o_.--""___/______/______/______/____
 /______/______/______/______/______/______/______/______/______/______/______/
 *******************************************************************************
-       ''')
+    ''')
+    print("Welcome to Treasure Island.")
+    print("Your mission is to find the treasure.")
 
-print("Welcome to Treasure Island.")
-print("Your mission is to find the treasure.")
-choice1 = input("You\'re at a cross road, where do you want to go? Type 'left' "
-                "or 'right'\n").lower()
+    choice1 = input("You're at a cross road, type 'left' or 'right':\n")
+    path1 = choose_first_path(choice1)
 
-if choice1 == "left":
-    choice2 = input("You\'ve come to a lake. There is an island in the middle "
-                    "of the lake. Type 'wait' to wait for a boat. Type 'swim' "
-                    "to swim across.\n").lower()
-    if choice2 == "wait":
-        choice3 = input("You arrive at the island unharmed. There is a house "
-                        "with 3 doors. One red, one yellow and one blue. Which "
-                        "colour do you choose?\n").lower()
-        if choice3 == "red":
-            print("It's a room full of fire. Game Over.")
-        elif choice3 == "blue":
-            print("You enter a room of beasts. Game Over.")
-        elif choice3 == "yellow":
-            print("You found the treasure! You Win!")
+    if path1 == "lake":
+        choice2 = input("You've come to a lake. Type 'wait' for a boat or 'swim' to cross:\n")
+        path2 = choose_second_path(choice2)
+        if path2 == "house":
+            choice3 = input("You arrive at a house with 3 doors: red, yellow, blue. Which color?\n")
+            result = choose_door(choice3)
+            if result == "treasure":
+                print("You found the treasure! You Win!")
+            elif result == "fire":
+                print("It's a room full of fire. Game Over.")
+            elif result == "beasts":
+                print("You enter a room of beasts. Game Over.")
+            else:
+                print("You chose a door that doesn't exist. Game Over.")
         else:
-            print("You chose a door that doesn't exist. Game Over.")
+            print("You get attacked by an angry trout. Game Over.")
     else:
-        print("You get attacked by an angry trout. Game Over.")
-else:
-    print("You fell into a hole. Game Over.")       
+        print("You fell into a hole. Game Over.")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,18 +1,17 @@
-# Treasure Island – Interactive Python Adventure Game
+# Treasure Island – Python Adventure Demo
 
-**Treasure Island** is a text-based adventure game in Python where every choice shapes the journey.  
-Players navigate through challenges, make decisions, and discover different outcomes in an engaging, interactive story.
+**Treasure Island** is a text-based adventure game in Python that demonstrates **interactive programming, decision-making, and clean, modular code structure**.  
+While it’s a fun game, it also serves as a **portfolio example of Python fundamentals** relevant to automation, scripting, and freelance micro-projects.
 
 ---
 
 ## 🎮 Features
 
-- Fully interactive Python game with multiple story paths  
-- Conditional logic (`if`, `elif`, `else`) to create dynamic scenarios  
-- Robust input handling with `.strip()` and `.lower()` for smooth gameplay  
-- ASCII-art visuals for an appealing, professional presentation  
-  - ASCII-art source: [https://ascii.co.uk/art](https://ascii.co.uk/art)  
-- Easy to expand with new levels, challenges, or story scenarios
+- Fully interactive console-based game with multiple story paths  
+- Decision-making logic separated into testable functions for maintainable code  
+- Input handling with `.strip()` and `.lower()` for smooth gameplay  
+- ASCII-art visuals for professional presentation  
+- Easily extendable with new doors, challenges, or storylines  
 
 ---
 
@@ -22,41 +21,69 @@ Players navigate through challenges, make decisions, and discover different outc
 ```bash
 git clone https://github.com/Johan1974/python-automation-and-tools.git
 cd python-automation-and-tools/treasure-island
-```
+````
 
 2. Run the game:
+
 ```bash
-python treasure_island.py
+python treasure.py
 ```
 
-3. Follow the prompts in the terminal to make decisions and explore the adventure.
+3. Follow the prompts in the terminal to navigate the adventure.
 
 ---
 
-## 💡 Applications & Use Cases
+## 💡 Learning & Applications
 
-- Engaging Python-based storytelling for entertainment or educational purposes  
-- Can be adapted for workshops, marketing campaigns, or interactive online experiences  
-- Demonstrates practical Python skills including input handling, conditional logic, and text-based interfaces
+This project highlights:
+
+* **Input validation and user prompts**
+* **Conditional statements and branching logic**
+* **Modular Python coding practices**
+* Skills directly relevant to **automation scripts, workflow tools, and interactive Python utilities**
+
+It’s ideal for:
+
+* Learning Python fundamentals
+* Demonstrating problem-solving in a portfolio
+* Workshops, educational demos, or gamified coding sessions
 
 ---
 
 ## 🔑 Key Benefits
 
-- Interactive and engaging experience for players  
-- Reliable and robust Python implementation for smooth execution  
-- Can be used for events, online experiences, or as a portfolio example of interactive Python development  
-- Naturally discoverable for users looking for Python adventure games, interactive storytelling, or text-based games
+* Interactive, engaging experience for players
+* Clean and testable Python code
+* Demonstrates practical coding skills to clients and collaborators
+* Includes unit tests to verify decision logic and ensure reliability
+
+---
+
+## 🧪 Testing & CI
+
+* The game logic is separated into functions (`choose_first_path`, `choose_second_path`, `choose_door`) to enable unit testing.
+* Unit tests are located in `treasure_island/tests/` and can be run via:
+
+```bash
+python -m unittest discover -s tests -p "test_*.py"
+```
+
+* GitHub Actions workflow (`.github/workflows/treasure_island_ci.yml`) ensures **automated testing on push or pull request**.
 
 ---
 
 ## License
 
-MIT License — free to use, modify, and distribute
+MIT License — free to use, modify, and study.
 
 ---
 
 ## Contact & Freelance
 
-Looking for a **custom Python game** or interactive storytelling tool?  
-Reach out via GitHub to discuss freelance development or tailored projects.
+While Treasure Island is a demo, the same skills can be applied to:
+
+* Interactive Python tools
+* Custom automation scripts
+* Educational or gamified Python projects
+
+Reach out via GitHub for **freelance development** or tailored Python solutions.
