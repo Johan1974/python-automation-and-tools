@@ -4,9 +4,12 @@ on:
   push:
     paths:
       - 'csv-cleaner/**'
+      - '.github/workflows/csv_cleaner_ci.yml'
+      
   pull_request:
     paths:
       - 'csv-cleaner/**'
+      - '.github/workflows/csv_cleaner_ci.yml'
 
 jobs:
   test:
