@@ -1,62 +1,58 @@
-# 🚀 Python Automation & Tools – Freelance-Ready Mini Projects
+# 🚀 Python Automation & Tools – Freelance-Ready Demo Projects
 
-Welcome to **Python Automation & Tools** – a curated collection of **Python scripts and small utilities** designed to save time, automate workflows, and boost productivity for freelancers, startups, and small businesses.  
+[![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&style=flat-square)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![GitHub Issues](https://img.shields.io/github/issues/Johan1974/python-automation-and-tools?style=flat-square)](https://github.com/Johan1974/python-automation-and-tools/issues)
 
-These ready-to-use Python projects are perfect for **workflow automation, business process optimization, data processing, and creative problem solving**.
+Welcome to **Python Automation & Tools** – a collection of **Python scripts and small Python utilities** that demonstrate **workflow automation, business automation, and practical freelance Python projects**.  
 
----
-
-## 📂 Featured Projects
-
-Each project includes its own README with **installation instructions, usage examples, and pro tips**. Click the project name to explore and run instantly.
-
-### 🟢 Band Name Generator
-Generate unique and creative names for bands, businesses, or projects. Perfect for **branding, marketing campaigns, and creative brainstorming**.  
-**Keywords:** Python tools, creative automation, brand name generator  
-[Explore →](band-name-generator/)
-
-### 🟢 Tip Calculator
-Quickly calculate tips based on totals and percentages. Ideal for **restaurants, events, or personal finance management**.  
-**Keywords:** Python mini-project, finance automation, Python scripts  
-[Explore →](tip_calculator/)
-
-### 🟢 CSV Cleaner
-Automatically clean and format CSV files. Simplify **data preprocessing, reporting, and workflow optimization** for business projects.  
-**Keywords:** Python automation, data cleaning, workflow optimization  
-[Explore →](csv-cleaner/)
-
-### 🟢 Test Scripts
-A collection of **utility scripts** for small automation tasks, text manipulation, and workflow improvements. Perfect for prototyping or daily repetitive tasks.  
-**Keywords:** Python utilities, automation scripts, freelance Python projects  
-[Explore →](test_scripts/)
+These **demo scripts** showcase my capabilities. Full-featured, polished versions are available for clients through freelance work.
 
 ---
 
-## 💡 Why Use These Python Tools?
+## 📂 Featured Demo Projects
 
-- **Automate repetitive tasks:** calculations, file handling, text processing, and reporting.  
-- **Boost productivity:** small tools that save hours of manual work.  
-- **Creative solutions:** name generators and workflow enhancers for business and events.  
-- **Portfolio & freelance ready:** showcase Python skills to clients, businesses, or agencies.  
+Each project includes a **demo script**, optional screenshot, or GIF to show functionality. Full versions or custom enhancements are available for clients.  
+
+| Project | Description | Demo / Visual |
+|--------|-------------|---------------|
+| **Band Name Generator** | Generate creative names for bands, businesses, or projects. Perfect for **branding, marketing campaigns, and workflow automation**. | ![Demo](band-name-generator/demo.gif) |
+| **Tip Calculator** | Quickly calculate tips for restaurants, events, or personal finance tasks. Example of **freelance Python projects and small business automation**. | ![Demo](tip_calculator/demo.gif) |
+| **CSV Cleaner** | Automatically clean and format CSV files for **data preprocessing, reporting, and workflow automation**. | ![Demo](csv-cleaner/demo.gif) |
+| **Test Scripts** | A set of **Python scripts and small utilities** for text manipulation, automation, and workflow testing. | ![Demo](test_scripts/demo.gif) |
+
+> Each GIF or screenshot shows a demo of functionality. Full-featured scripts are available to paying clients only.
 
 ---
 
-## 🔥 Ready for Freelance Work & Custom Projects
+## 💡 Why These Demos Matter
 
-Need a **custom Python automation tool** or workflow optimization for your business?  
-I provide **bespoke Python solutions** for freelancers, startups, and small businesses:  
+- Demonstrates **Python automation, workflow automation, and small Python utilities** in real-world scenarios.  
+- Highlights **Python mini-projects and freelance Python projects** designed for small businesses or startups.  
+- Shows how **Python tools** can simplify repetitive tasks, save time, and boost productivity.  
 
-- Workflow automation & business process scripts  
-- Data cleaning, reporting, and CSV/Excel tools  
-- Creative generators and utility scripts  
+---
 
-**Contact:** Reach out via GitHub for freelance gigs or custom projects.  
+## 🔥 Freelance & Custom Work
 
-**SEO Keywords / Tags:** Python automation, Python scripts, Python tools, workflow automation, business automation, Python mini-projects, small Python utilities, freelance Python projects, Fiverr Python gigs, Upwork Python microjobs  
+Need a **custom Python tool, workflow automation, or complete Python project**? I offer:
+
+- **Freelance Python projects** for startups, small businesses, or independent professionals  
+- Custom **Python automation** for workflow and business process optimization  
+- **Small Python utilities** for data cleaning, reporting, and repetitive tasks  
+- Creative **Python tools** for marketing, branding, and internal operations  
+
+**Contact:** Reach out via GitHub for freelance work, Fiverr Python gigs, Upwork Python microjobs, or custom Python solutions.
+
+---
+
+## 🛠️ Issues & Support
+
+- Demo script issues can be **reported via GitHub issues**.  
+- For **full-featured tools or professional support**, contact me directly to arrange freelance work.
 
 ---
 
 ## 📝 License
 
-MIT License — free to use, modify, or study.
-
+MIT License — demo scripts free to explore; full-featured versions are available for clients.
