@@ -1,27 +1,51 @@
 # Treasure Island – Python Adventure Demo
 
-**Treasure Island** is a text-based adventure game in Python that demonstrates **interactive programming, decision-making, and clean, modular code structure**.  
+![Python Version](https://img.shields.io/badge/python-3.11-blue) 
+![License: MIT](https://img.shields.io/badge/License-MIT-green) 
+![CI](https://github.com/Johan1974/python-automation-and-tools/actions/workflows/treasure_island_ci.yml/badge.svg)
+
+**Treasure Island** is a text-based adventure game in Python that demonstrates **interactive programming, branching logic, and clean, modular code structure**.  
 While it’s a fun game, it also serves as a **portfolio example of Python fundamentals** relevant to automation, scripting, and freelance micro-projects.
+
+**GitHub Repository:** [https://github.com/Johan1974/python-automation-and-tools/tree/main/treasure_island](https://github.com/Johan1974/python-automation-and-tools/tree/main/treasure_island)
 
 ---
 
 ## 🎮 Features
 
 - Fully interactive console-based game with multiple story paths  
-- Decision-making logic separated into testable functions for maintainable code  
+- Decision-making logic separated into **testable functions** for maintainable code  
 - Input handling with `.strip()` and `.lower()` for smooth gameplay  
 - ASCII-art visuals for professional presentation  
+  - ASCII-art source: [https://ascii.co.uk/art](https://ascii.co.uk/art)  
 - Easily extendable with new doors, challenges, or storylines  
+
+---
+
+## 🖥️ Example Gameplay
+
+```text
+Welcome to Treasure Island.
+Your mission is to find the treasure.
+You're at a cross road, type 'left' or 'right':
+> left
+You've come to a lake. Type 'wait' for a boat or 'swim' to cross:
+> wait
+You arrive at a house with 3 doors: red, yellow, blue. Which color?
+> yellow
+You found the treasure! You Win!
+````
 
 ---
 
 ## 🚀 Installation & Usage
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/Johan1974/python-automation-and-tools.git
-cd python-automation-and-tools/treasure-island
-````
+cd python-automation-and-tools/treasure_island
+```
 
 2. Run the game:
 
@@ -61,8 +85,8 @@ It’s ideal for:
 
 ## 🧪 Testing & CI
 
-* The game logic is separated into functions (`choose_first_path`, `choose_second_path`, `choose_door`) to enable unit testing.
-* Unit tests are located in `treasure_island/tests/` and can be run via:
+* Game logic is separated into functions (`choose_first_path`, `choose_second_path`, `choose_door`) for unit testing.
+* Unit tests are in `treasure_island/tests/` and can be run via:
 
 ```bash
 python -m unittest discover -s tests -p "test_*.py"
@@ -87,3 +111,4 @@ While Treasure Island is a demo, the same skills can be applied to:
 * Educational or gamified Python projects
 
 Reach out via GitHub for **freelance development** or tailored Python solutions.
+
