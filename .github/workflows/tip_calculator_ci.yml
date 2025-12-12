@@ -1,0 +1,32 @@
+name: Tip Calculator – Tests
+
+on:
+  push:
+    paths:
+      - 'tip_calculator/**'
+      - '.github/workflows/tip_calculator_ci.yml'
+  pull_request:
+    paths:
+      - 'tip_calculator/**'
+      - '.github/workflows/tip_calculator_ci.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip
+
+      - name: Run unit tests
+        working-directory: ./
+        env:
+          PYTHONPATH: .
+        run: python -m unittest discover -s tip_calculator/tests -p "test_*.py"

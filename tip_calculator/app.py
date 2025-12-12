@@ -1,36 +1,14 @@
+#!/usr/bin/env python3
+"""
+Python Tip Calculator – Web Version (Flask)
+Reuses calculation logic from calculator.py.
+"""
+
 from flask import Flask, request, render_template
-import locale
-
-# --- Load system locale settings ---
-locale.setlocale(locale.LC_ALL, '')
-conv = locale.localeconv()
-
-SYSTEM_DECIMAL = conv['decimal_point']
-SYSTEM_THOUSAND = conv['thousands_sep']
-SYSTEM_CURRENCY = conv['currency_symbol']
+from tip_calculator.calculator import parse_number, format_currency, calculate_tip
 
 app = Flask(__name__)
 
-def parse_number(value):
-    """Parse number string into float (locale-aware, EU/US fallback)."""
-    value = value.strip()
-    try:
-        return locale.atof(value)
-    except ValueError:
-        pass
-    last_dot = value.rfind(".")
-    last_comma = value.rfind(",")
-    if last_comma > last_dot:  # EU
-        clean = value.replace(".", "").replace(",", ".")
-        return float(clean)
-    return float(value.replace(",", ""))  # US
-
-def format_currency(amount):
-    """Format currency using locale if possible, fallback $X.XX."""
-    try:
-        return locale.currency(amount, grouping=True)
-    except ValueError:
-        return f"${amount:,.2f}"
 
 @app.route("/", methods=["GET", "POST"])
 def home():
@@ -39,23 +17,20 @@ def home():
 
     if request.method == "POST":
         # --- Parse inputs ---
-        bill = parse_number(request.form.get("bill"))
-        tip_percentage = parse_number(request.form.get("tip_percentage"))
-        people = int(request.form.get("people"))
+        bill = parse_number(request.form.get("bill", "0"))
+        tip_percentage = parse_number(request.form.get("tip_percentage", "0"))
+        people = int(request.form.get("people", "1"))
 
-        # --- Calculations ---
-        tip_amount = bill * (tip_percentage / 100)
-        total_bill = bill + tip_amount
-        per_person_amount = total_bill / people
+        # --- Calculations using shared function ---
+        total_tip, total_bill, amount_per_person = calculate_tip(bill, tip_percentage, people)
 
         # --- Format results ---
-        tip = format_currency(tip_amount)
+        tip = format_currency(total_tip)
         total = format_currency(total_bill)
-        per_person = format_currency(per_person_amount)
+        per_person = format_currency(amount_per_person)
 
-        result = True  # flag to show results in HTML
+        result = True  # Flag to show results in template
 
-    # --- Render HTML with results ---
     return render_template(
         "index.html",
         result=result,
@@ -63,6 +38,7 @@ def home():
         total=total,
         per_person=per_person
     )
+
 
 if __name__ == "__main__":
     app.run(debug=True)
