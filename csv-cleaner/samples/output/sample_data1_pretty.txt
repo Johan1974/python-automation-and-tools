@@ -1,8 +1,8 @@
-name        email                   age   city           
----------------------------------------------------------
-John Doe    john@example.com        30.0  New York       
-Jane Smith  jane.smith@example.com  25.0  Los Angeles    
-Alice       alice@example.com       30.4  Chicago        
-Bob         bob@example.com         40.0  Unknown        
-Unknown     missing@example.com     22.0  Miami          
-Charlie     charlie@example.com     35.0  San Francisco  
+name        email                   age  city           
+--------------------------------------------------------
+John Doe    john@example.com        30   New York       
+Jane Smith  jane.smith@example.com  25   Los Angeles    
+Alice       alice@example.com       30   Chicago        
+Bob         bob@example.com         40   Unknown        
+Unknown     missing@example.com     22   Miami          
+Charlie     charlie@example.com     35   San Francisco  

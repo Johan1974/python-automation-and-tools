@@ -9,14 +9,25 @@ import sys
 # CSV Cleaner Functions
 # -----------------------
 def pretty_print(df):
-    df_str = df.astype(str)
-    col_widths = {col: max(df_str[col].map(len).max(), len(col)) + 2 for col in df.columns}
-    header = "".join(col.ljust(col_widths[col]) for col in df.columns)
+    df_str = df.copy()
+    
+    for col in df_str.columns:
+        if pd.api.types.is_integer_dtype(df_str[col]):
+            df_str[col] = df_str[col].astype(int).astype(str)
+        elif pd.api.types.is_float_dtype(df_str[col]):
+            # If value is exactly an integer, show as int
+            df_str[col] = df_str[col].apply(lambda x: str(int(x)) if x == int(x) else f"{x:.2f}")
+        else:
+            df_str[col] = df_str[col].astype(str)
+
+    col_widths = {col: max(df_str[col].map(len).max(), len(col)) + 2 for col in df_str.columns}
+    header = "".join(col.ljust(col_widths[col]) for col in df_str.columns)
     print(header)
     print("-" * sum(col_widths.values()))
     for _, row in df_str.iterrows():
-        line = "".join(str(row[col]).ljust(col_widths[col]) for col in df.columns)
+        line = "".join(str(row[col]).ljust(col_widths[col]) for col in df_str.columns)
         print(line)
+
 
 def read_csv(file_path):
     if not os.path.isfile(file_path):
@@ -51,13 +62,16 @@ def fill_numbers(df, method="mean"):
             df[col] = df[col].fillna(df[col].mean())
         elif method == "zero":
             df[col] = df[col].fillna(0)
-        # Auto-detect likely integer columns
+
+        # Round all numbers to 0 decimals if they are effectively integers
         non_nan_values = df[col].dropna()
-        if (non_nan_values % 1 == 0).all():
-            df[col] = df[col].round(0).astype(int)
+        if (non_nan_values % 1 == 0).all():  # all whole numbers
+            df[col] = df[col].astype(int)
         else:
-            df[col] = df[col].round(2)
+            df[col] = df[col].round(0).astype(int)  # force rounding to int
     return df
+
+
 
 def remove_duplicates(df):
     return df.drop_duplicates()

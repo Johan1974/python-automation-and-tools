@@ -7,46 +7,85 @@
 **CSV Cleaner** is a Python CLI tool for cleaning, normalizing, and prettifying CSV files.  
 Ideal for **data analysts, developers, and data scientists** who want to remove duplicates, fill missing values, and standardize CSV data quickly and reliably.
 
-**GitHub Repository:** [https://github.com/Johan1974/python-automation-and-tools/tree/main/csv-cleaner](https://github.com/Johan1974/python-automation-and-tools/tree/main/csv-cleaner)
+**GitHub Repository:**  
+https://github.com/Johan1974/python-automation-and-tools/tree/main/csv-cleaner
+
+---
+
+## 📸 Screenshot / Preview
+
+Here’s an example of the ASCII preview output for a cleaned CSV:
+
+![CSV Cleaner Preview](screenshots/preview.png)
+
+## 🗂 Sample Output
+
+**Cleaned CSV (`sample_data1_cleaned.csv`):**
+
+```csv
+name,email,age,city
+John Doe,john@example.com,30,New York
+Jane Smith,jane.smith@example.com,25,Los Angeles
+Alice,alice@example.com,30,Chicago
+Bob,bob@example.com,40,Unknown
+Unknown,missing@example.com,22,Miami
+Charlie,charlie@example.com,35,San Francisco
+````
+
+**Pretty ASCII Preview (`sample_data1_pretty.txt`):**
+
+```
+name        email                   age  city           
+--------------------------------------------------------
+John Doe    john@example.com        30   New York       
+Jane Smith  jane.smith@example.com  25   Los Angeles    
+Alice       alice@example.com       30   Chicago        
+Bob         bob@example.com         40   Unknown        
+Unknown     missing@example.com     22   Miami          
+Charlie     charlie@example.com     35   San Francisco  
+```
+
+> ✅ All numeric columns are now **integers**, ensuring clean and consistent output for analysis or reporting.
+> Floating-point numbers representing whole numbers are rounded to remove decimals.
 
 ---
 
 ## 💡 Why Use This Tool?
 
-- Save hours of manual CSV cleaning  
-- Auto-detect numeric columns stored as text  
-- Fill missing values for strings and numbers  
-- Remove duplicate rows  
-- Pretty-print cleaned CSVs in your terminal  
-- Save formatted ASCII tables for quick reviews  
-- Works with **any CSV**, including large datasets
+* Save hours of manual CSV cleaning
+* Auto-detect numeric columns stored as text
+* Fill missing values for strings and numbers
+* Remove duplicate rows
+* Pretty-print cleaned CSVs in your terminal
+* Save formatted ASCII tables for quick reviews
+* Works with **any CSV**, including large datasets
 
 ---
 
 ## 🎮 Features
 
-- Strip spaces from column names  
-- Auto-detect and convert numeric fields  
-- Fill missing string values using a default or custom value  
-- Fill missing numeric values using mean, zero, or skip  
-- Remove duplicate rows  
-- Optional ASCII preview  
-- Output filenames auto-generated  
-- Lightweight, fast, automation-friendly CLI
+* Strip spaces from column names
+* Auto-detect and convert numeric fields
+* Fill missing string values using a default or custom value
+* Fill missing numeric values using mean, zero, or skip
+* Remove duplicate rows
+* Optional ASCII preview
+* Output filenames auto-generated
+* Lightweight, fast, automation-friendly CLI
 
 ---
 
 ## 🛠 Requirements
 
-- Python 3.8+  
-- `pandas`  
-- `numpy`  
+* Python 3.8+
+* `pandas`
+* `numpy`
 
 Install dependencies:
 
 ```bash
 pip install pandas numpy
-````
+```
 
 ---
 
@@ -80,19 +119,6 @@ python3 src/cleaner.py --in samples/input/example.csv
 
 ---
 
-## 🖥 Example: ASCII Preview
-
-```
-name       email                  age   city
---------------------------------------------
-John Doe   john@example.com       30    New York
-Jane Smith jane.smith@example.com 25    Los Angeles
-Alice      alice@example.com      31    Chicago
-Bob        bob@example.com        40    Unknown
-```
-
----
-
 ## 🧪 Running Tests Locally
 
 Run all unit tests:
@@ -107,7 +133,7 @@ Run an integration test:
 python3 src/cleaner.py --in samples/input/example.csv
 ```
 
-Make sure dependencies are installed:
+Ensure dependencies are installed:
 
 ```bash
 pip install -r requirements.txt
@@ -173,3 +199,4 @@ Contact me via GitHub: **[https://github.com/Johan1974](https://github.com/Johan
 ## 📝 License
 
 MIT License — free to use, modify, and distribute
+
