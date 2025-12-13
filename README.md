@@ -4,7 +4,7 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-green)
 ![CI](https://github.com/Johan1974/python-automation-and-tools/actions/workflows/tip_calculator_ci.yml/badge.svg)
 
-A professional collection of **Python scripts and small tools** for automation, data processing, text handling, and interactive utilities.  
+A professional collection of **Python scripts and small tools** for automation, data processing, text handling, and interactive utilities.
 Designed for **freelancers, startups, and businesses** looking to automate repetitive tasks or showcase practical Python projects.
 
 **GitHub Repository:** [https://github.com/Johan1974/python-automation-and-tools](https://github.com/Johan1974/python-automation-and-tools)
@@ -15,33 +15,31 @@ Designed for **freelancers, startups, and businesses** looking to automate repet
 
 Explore the main projects with usage examples and visual previews:
 
-| Project | Preview | Example Usage | Description |
-|--------|---------|---------------|-------------|
-| **Tip Calculator** | ![Tip Calc Screenshot](https://via.placeholder.com/200x120.png?text=Tip+Calculator) | `python tip_calculator/calculator.py` | CLI and web (Flask) tool to calculate tips, total bills, and per-person splits with locale-aware input. |
-| **Band Name Generator** | ![Band Name Screenshot](https://via.placeholder.com/200x120.png?text=Band+Name+Generator) | `python band-name-generator/band_name_generator.py` | Interactive console tool generating creative names for bands, businesses, or projects. Ideal for branding. |
-| **CSV Cleaner** | ![CSV Cleaner Screenshot](https://via.placeholder.com/200x120.png?text=CSV+Cleaner) | `python csv-cleaner/src/cleaner.py --in samples/input/example.csv` | CLI utility to clean, normalize, and prettify CSV files. Remove duplicates, fill missing values, and generate ASCII previews. |
-| **Treasure Island** | ![Treasure Island Screenshot](https://via.placeholder.com/200x120.png?text=Treasure+Island) | `python treasure_island/treasure.py` | Text-based adventure game with multiple story paths, conditional logic, and ASCII art. Great for learning Python basics. |
-
-> Replace the placeholder images with actual screenshots or GIFs for a more professional presentation.
+| Project                 | Preview                                                                                                               | Example Usage                                                      | Description                                                                                                                   |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| **Tip Calculator**      | ![CLI Version](tip_calculator/screenshots/cli_version.png) ![Web Version](tip_calculator/screenshots/web_version.png) | `python tip_calculator/calculator.py`                              | CLI and web (Flask) tool to calculate tips, total bills, and per-person splits with locale-aware input.                       |
+| **Band Name Generator** | ![Band Name Generator](band-name-generator/screenshots/sample.png)                                                    | `python band-name-generator/band_name_generator.py`                | Interactive console tool generating creative names for bands, businesses, or projects. Ideal for branding.                    |
+| **CSV Cleaner**         | ![CSV Cleaner Preview](csv-cleaner/screenshots/preview.png)                                                           | `python csv-cleaner/src/cleaner.py --in samples/input/example.csv` | CLI utility to clean, normalize, and prettify CSV files. Remove duplicates, fill missing values, and generate ASCII previews. |
+| **Treasure Island**     | ![Treasure Island Preview](treasure_island/screenshots/preview.png)                                                   | `python treasure_island/treasure.py`                               | Text-based adventure game with multiple story paths, conditional logic, and ASCII art. Great for learning Python basics.      |
 
 ---
 
 ## 💡 Use Cases
 
-- Automate repetitive tasks: calculations, file or text processing  
-- Generate creative ideas with interactive tools like name generators  
-- Clean and preprocess data for analytics and reporting  
-- Learn Python basics through interactive games  
-- Rapid prototyping for workshops, internal processes, or events
+* Automate repetitive tasks: calculations, file/text processing
+* Generate creative ideas with interactive tools like name generators
+* Clean and preprocess data for analytics and reporting
+* Learn Python basics through interactive games
+* Rapid prototyping for workshops, internal processes, or events
 
 ---
 
 ## 🚀 Why Choose These Tools
 
-- **Ready-to-use:** All scripts are functional out-of-the-box  
-- **Portfolio-ready:** Demonstrates practical Python skills for clients and employers  
-- **Customizable:** Easily extendable for specific workflows or business needs  
-- **Market-focused:** Designed with real-world tasks and freelance demand in mind
+* **Ready-to-use:** Functional scripts out-of-the-box
+* **Portfolio-ready:** Demonstrates practical Python skills for clients and employers
+* **Customizable:** Easily extendable for specific workflows or business needs
+* **Market-focused:** Designed with real-world tasks and freelance demand in mind
 
 ---
 
@@ -52,7 +50,7 @@ Clone the repository:
 ```bash
 git clone https://github.com/Johan1974/python-automation-and-tools.git
 cd python-automation-and-tools
-````
+```
 
 Each project has its own usage instructions in its folder:
 
@@ -61,15 +59,17 @@ Each project has its own usage instructions in its folder:
 * **CSV Cleaner:** CLI for CSV preprocessing (`csv-cleaner/`)
 * **Treasure Island:** Text-based adventure game (`treasure_island/`)
 
-Example for **Tip Calculator CLI**:
+### Example Commands
+
+**Tip Calculator CLI**:
 
 ```bash
 python tip_calculator/calculator.py
 # Enter total bill, tip %, number of people
-# Output shows tip, total, per-person
+# Output shows tip, total, per-person splits
 ```
 
-Example for **Band Name Generator**:
+**Band Name Generator**:
 
 ```bash
 python band-name-generator/band_name_generator.py
@@ -77,14 +77,14 @@ python band-name-generator/band_name_generator.py
 # Generates a creative band name
 ```
 
-Example for **CSV Cleaner**:
+**CSV Cleaner**:
 
 ```bash
 python csv-cleaner/src/cleaner.py --in samples/input/example.csv
-# Cleans CSV and outputs formatted version
+# Cleans CSV and outputs formatted version with integer numeric columns
 ```
 
-Example for **Treasure Island**:
+**Treasure Island**:
 
 ```bash
 python treasure_island/treasure.py

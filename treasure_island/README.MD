@@ -4,31 +4,41 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-green)
 ![CI](https://github.com/Johan1974/python-automation-and-tools/actions/workflows/treasure_island_ci.yml/badge.svg)
 
-**Treasure Island** is a text-based adventure game in Python where every choice shapes the journey.  
+**Treasure Island** is a text-based adventure game in Python where every choice shapes the journey.
 Players navigate through challenges, make decisions, and discover different outcomes in an engaging, interactive story.
 
 **GitHub Repository:** [https://github.com/Johan1974/python-automation-and-tools/tree/main/treasure_island](https://github.com/Johan1974/python-automation-and-tools/tree/main/treasure_island)
 
 ---
 
+## 📸 Screenshot / Preview
+
+Here’s a preview of the interactive gameplay:
+
+![Treasure Island Preview](screenshots/preview.png)
+
+---
+
 ## 🎮 Features
 
-- Fully interactive Python game with multiple story paths  
-- Conditional logic (`if`, `elif`, `else`) to create dynamic scenarios  
-- Robust input handling with `.strip()` and `.lower()` for smooth gameplay  
-- ASCII-art visuals for an appealing, professional presentation  
-  - ASCII-art source: [https://ascii.co.uk/art](https://ascii.co.uk/art)  
-- Easy to expand with new levels, challenges, or story scenarios
+* Fully interactive Python game with multiple story paths
+* Conditional logic (`if`, `elif`, `else`) to create dynamic scenarios
+* Robust input handling with `.strip()` and `.lower()` for smooth gameplay
+* ASCII-art visuals for an appealing, professional presentation
+
+  * ASCII-art source: [https://ascii.co.uk/art](https://ascii.co.uk/art)
+* Easy to expand with new levels, challenges, or story scenarios
 
 ---
 
 ## 🚀 Installation & Usage
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/Johan1974/python-automation-and-tools.git
 cd python-automation-and-tools/treasure_island
-````
+```
 
 2. Run the game:
 
@@ -43,8 +53,8 @@ python treasure.py
 ## 💡 Applications & Use Cases
 
 * Python-based storytelling for entertainment or educational purposes
-* Can be adapted for workshops, marketing campaigns, or interactive online experiences
-* Demonstrates practical Python skills including input handling, conditional logic, and text-based interfaces
+* Adaptable for workshops, marketing campaigns, or interactive online experiences
+* Demonstrates practical Python skills: input handling, conditional logic, text-based interfaces
 
 ---
 
@@ -52,8 +62,8 @@ python treasure.py
 
 * Interactive and engaging experience for players
 * Reliable Python implementation for smooth execution
-* Useful for events, online experiences, or as a portfolio example of interactive Python development
-* Naturally discoverable for users seeking Python adventure games or text-based interactive stories
+* Useful for events, online experiences, or portfolio examples
+* Naturally discoverable for users seeking Python adventure games or text-based stories
 
 ---
 
