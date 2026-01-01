@@ -19,63 +19,66 @@ jobs:
 
     steps:
       # Checkout repository
-      - name: Check out repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      # Set up Python 3.11
+      # Set up Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      # Install dependencies
+      # Install dependencies (none required, just pytest for testing)
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pytest
 
-      # Prepare temp folder for testing
+      # Prepare temp test folder (cross-platform)
       - name: Prepare temp test folder
+        if: runner.os != 'Windows'
+        shell: bash
         run: |
-          # Remove old folder if exists
           rm -rf temp_test_folder || true
-          mkdir temp_test_folder
-          # Copy sample files
+          mkdir -p temp_test_folder
           cp -r python-auto-file-organizer/test_folder/* temp_test_folder/
 
-      # Dry-run: preview extension sorting
+      - name: Prepare temp test folder (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          if (Test-Path temp_test_folder) { Remove-Item -Recurse -Force temp_test_folder }
+          New-Item -ItemType Directory temp_test_folder | Out-Null
+          Copy-Item -Path python-auto-file-organizer\test_folder\* -Destination temp_test_folder -Recurse
+
+      # Dry-run: extension
       - name: Dry-run organize by extension
         run: |
-          python python-auto-file-organizer/auto_cleanup.py \
-            -s temp_test_folder \
-            -d temp_test_folder_output \
-            --mode extension \
-            --dry-run
+          python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode extension --dry-run
 
-      # Actual organize by extension
+      # Organize by extension
       - name: Organize by extension
         run: |
-          python python-auto-file-organizer/auto_cleanup.py \
-            -s temp_test_folder \
-            -d temp_test_folder_output \
-            --mode extension
+          python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode extension
 
-      # Reset temp folder to original
+      # Reset temp folder
       - name: Reset temp test folder
         run: |
-          python python-auto-file-organizer/auto_cleanup.py \
-            -s temp_test_folder \
-            --reset
+          python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --reset
 
-      # Organize by date into new folder
+      # Organize by date
       - name: Organize by date
         run: |
-          python python-auto-file-organizer/auto_cleanup.py \
-            -s temp_test_folder \
-            -d temp_test_folder_output_date \
-            --mode date
+          python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode date
 
-      # Final cleanup
-      - name: Remove temp test folders
+      # Cleanup temp folder
+      - name: Remove temp test folder (Linux/macOS)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: rm -rf temp_test_folder
+
+      - name: Remove temp test folder (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
         run: |
-          rm -rf temp_test_folder temp_test_folder_output temp_test_folder_output_date
+          if (Test-Path temp_test_folder) { Remove-Item -Recurse -Force temp_test_folder }
