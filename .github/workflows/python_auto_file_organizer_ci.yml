@@ -1,0 +1,63 @@
+name: Python Auto File Organizer CI
+
+on:
+  push:
+    paths:
+      - 'python-auto-file-organizer/**'
+      - '.github/workflows/python_auto_file_organizer_ci.yml'
+  pull_request:
+    paths:
+      - 'python-auto-file-organizer/**'
+      - '.github/workflows/python_auto_file_organizer_ci.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repo
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # Install dependencies (none required here, placeholder)
+      - name: Install dependencies
+        run: |
+          cd python-auto-file-organizer
+          python -m pip install --upgrade pip
+
+      # Create a temporary test folder for full end-to-end test
+      - name: Create temp test folder
+        run: |
+          cd python-auto-file-organizer
+          mkdir -p temp_test_folder
+          cp test_folder/* temp_test_folder/
+
+      # Run organize by extension (actual move)
+      - name: Organize by extension
+        run: |
+          cd python-auto-file-organizer
+          python3 auto_cleanup.py -s temp_test_folder --mode extension
+
+      # Reset temp folder to original state
+      - name: Reset temp test folder
+        run: |
+          cd python-auto-file-organizer
+          python3 auto_cleanup.py -s temp_test_folder --reset
+
+      # Run organize by date (actual move)
+      - name: Organize by date
+        run: |
+          cd python-auto-file-organizer
+          python3 auto_cleanup.py -s temp_test_folder --mode date
+
+      # Clean up temporary test folder
+      - name: Remove temp test folder
+        run: |
+          cd python-auto-file-organizer
+          rm -rf temp_test_folder
