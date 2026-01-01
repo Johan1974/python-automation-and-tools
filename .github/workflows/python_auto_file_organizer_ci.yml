@@ -12,29 +12,25 @@ on:
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
 
     steps:
-      # Checkout repo
       - name: Check out repository
         uses: actions/checkout@v4
 
-      # Set up Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      # Install dependencies (placeholder)
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pytest
 
-      # Create and populate temp test folder
       - name: Prepare temp test folder
         shell: bash
         run: |
@@ -46,24 +42,22 @@ jobs:
             cp -r python-auto-file-organizer/test_folder/* temp_test_folder/
           fi
 
-      # Dry-run test
-      - name: Dry-run organize (extension mode)
-        run: python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode extension --dry-run
+      - name: Run Python Auto File Organizer tests
+        shell: bash
+        run: |
+          # Dry-run first
+          python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode extension --dry-run
+          
+          # Organize by extension
+          python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode extension
+          
+          # Reset folder
+          python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --reset
+          
+          # Organize by date
+          python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode date
 
-      # Organize by extension
-      - name: Organize by extension
-        run: python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode extension
-
-      # Reset temp folder
-      - name: Reset temp test folder
-        run: python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --reset
-
-      # Organize by date
-      - name: Organize by date
-        run: python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode date
-
-      # Clean up
-      - name: Remove temp test folder
+      - name: Clean up temp test folder
         shell: bash
         run: |
           if [[ "$RUNNER_OS" == "Windows" ]]; then
