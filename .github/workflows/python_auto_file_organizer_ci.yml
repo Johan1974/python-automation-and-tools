@@ -19,50 +19,65 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      # Checkout repo
-      - name: Check out repository
+      # Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      # Setup Python 3.11
-      - name: Set up Python
+      # Set up Python 3.11
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: 3.11
 
-      # Upgrade pip
+      # Install dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pytest
 
-      # Create temp test folder (cross-platform)
-      - name: Create temp test folder
+      # Prepare temp test folder
+      - name: Prepare temp test folder
         run: |
-          if [ "$RUNNER_OS" = "Windows" ]; then \
-            mkdir temp_test_folder; \
-            xcopy python-auto-file-organizer\test_folder\* temp_test_folder /E /I /Y; \
-          else \
-            mkdir -p temp_test_folder; \
-            cp -r python-auto-file-organizer/test_folder/* temp_test_folder/; \
+          if [ $RUNNER_OS = 'Windows' ]; then
+            powershell -Command "Remove-Item -Recurse -Force temp_test_folder; New-Item -ItemType Directory temp_test_folder; Copy-Item -Path python-auto-file-organizer\test_folder\* -Destination temp_test_folder -Recurse"
+          else
+            rm -rf temp_test_folder
+            mkdir -p temp_test_folder
+            cp -r python-auto-file-organizer/test_folder/* temp_test_folder/
           fi
 
-      # Dry-run organize to check safety
+      # Dry-run validation
       - name: Dry-run organize
-        run: python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode ${{ matrix.mode }} --dry-run
+        run: |
+          if [ $RUNNER_OS = 'Windows' ]; then
+            python python-auto-file-organizer\auto_cleanup.py -s temp_test_folder --mode ${{ matrix.mode }} --dry-run
+          else
+            python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode ${{ matrix.mode }} --dry-run
+          fi
 
       # Actual organize
-      - name: Organize files
-        run: python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode ${{ matrix.mode }}
+      - name: Run actual organize
+        run: |
+          if [ $RUNNER_OS = 'Windows' ]; then
+            python python-auto-file-organizer\auto_cleanup.py -s temp_test_folder --mode ${{ matrix.mode }}
+          else
+            python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode ${{ matrix.mode }}
+          fi
 
-      # Reset temp test folder
+      # Reset temp folder
       - name: Reset temp test folder
-        run: python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --reset
+        run: |
+          if [ $RUNNER_OS = 'Windows' ]; then
+            python python-auto-file-organizer\auto_cleanup.py -s temp_test_folder --reset
+          else
+            python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --reset
+          fi
 
-      # Clean up temp folder (cross-platform)
+      # Final cleanup
       - name: Remove temp test folder
         run: |
-          if [ "$RUNNER_OS" = "Windows" ]; then \
-            rmdir /S /Q temp_test_folder; \
-          else \
-            rm -rf temp_test_folder; \
+          if [ $RUNNER_OS = 'Windows' ]; then
+            powershell -Command "Remove-Item -Recurse -Force temp_test_folder"
+          else
+            rm -rf temp_test_folder
           fi
