@@ -18,50 +18,64 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
+      # Checkout repository
       - name: Check out repository
         uses: actions/checkout@v4
 
+      # Set up Python 3.11
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
+      # Install dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pytest
 
+      # Prepare temp folder for testing
       - name: Prepare temp test folder
-        shell: bash
         run: |
-          if [[ "$RUNNER_OS" == "Windows" ]]; then
-            powershell -Command "Remove-Item -Recurse -Force temp_test_folder; New-Item -ItemType Directory temp_test_folder; Copy-Item -Path python-auto-file-organizer\test_folder\* -Destination temp_test_folder -Recurse"
-          else
-            rm -rf temp_test_folder
-            mkdir -p temp_test_folder
-            cp -r python-auto-file-organizer/test_folder/* temp_test_folder/
-          fi
+          # Remove old folder if exists
+          rm -rf temp_test_folder || true
+          mkdir temp_test_folder
+          # Copy sample files
+          cp -r python-auto-file-organizer/test_folder/* temp_test_folder/
 
-      - name: Run Python Auto File Organizer tests
-        shell: bash
+      # Dry-run: preview extension sorting
+      - name: Dry-run organize by extension
         run: |
-          # Dry-run first
-          python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode extension --dry-run
-          
-          # Organize by extension
-          python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode extension
-          
-          # Reset folder
-          python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --reset
-          
-          # Organize by date
-          python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode date
+          python python-auto-file-organizer/auto_cleanup.py \
+            -s temp_test_folder \
+            -d temp_test_folder_output \
+            --mode extension \
+            --dry-run
 
-      - name: Clean up temp test folder
-        shell: bash
+      # Actual organize by extension
+      - name: Organize by extension
         run: |
-          if [[ "$RUNNER_OS" == "Windows" ]]; then
-            powershell -Command "Remove-Item -Recurse -Force temp_test_folder"
-          else
-            rm -rf temp_test_folder
-          fi
+          python python-auto-file-organizer/auto_cleanup.py \
+            -s temp_test_folder \
+            -d temp_test_folder_output \
+            --mode extension
+
+      # Reset temp folder to original
+      - name: Reset temp test folder
+        run: |
+          python python-auto-file-organizer/auto_cleanup.py \
+            -s temp_test_folder \
+            --reset
+
+      # Organize by date into new folder
+      - name: Organize by date
+        run: |
+          python python-auto-file-organizer/auto_cleanup.py \
+            -s temp_test_folder \
+            -d temp_test_folder_output_date \
+            --mode date
+
+      # Final cleanup
+      - name: Remove temp test folders
+        run: |
+          rm -rf temp_test_folder temp_test_folder_output temp_test_folder_output_date

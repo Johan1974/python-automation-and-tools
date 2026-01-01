@@ -1,11 +1,12 @@
+
 # Python Auto File Organizer 🗂️🐍
 
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green)
 ![CI](https://github.com/Johan1974/python-automation-and-tools/actions/workflows/python_auto_file_organizer_ci.yml/badge.svg)
 
-**Python Auto File Organizer** is a Python CLI tool that automatically organizes files in a folder by **extension** or **modification date**.
-Perfect for **developers, data analysts, and productivity enthusiasts** who want to keep folders tidy without manual effort.
+**Python Auto File Organizer** is a Python CLI tool to automatically organize files in a folder by **extension** or **modification date**.
+Ideal for **developers, data analysts, and productivity enthusiasts** who want clutter-free folders with minimal effort.
 
 **GitHub Repository:**
 [https://github.com/Johan1974/python-automation-and-tools/tree/main/python-auto-file-organizer](https://github.com/Johan1974/python-automation-and-tools/tree/main/python-auto-file-organizer)
@@ -14,46 +15,20 @@ Perfect for **developers, data analysts, and productivity enthusiasts** who want
 
 ## 📸 Screenshot / Preview
 
-**Before organizing:**
 
-```
-test_folder/
-├── document.pdf
-├── image.png
-├── notes.txt
-├── photo.jpg
-└── script.py
-```
-
-**After organizing by extension:**
-
-```
-test_folder/
-├── pdf/
-│   └── document.pdf
-├── png/
-│   └── image.png
-├── txt/
-│   └── notes.txt
-├── jpg/
-│   └── photo.jpg
-└── py/
-└── script.py
-```
-
-**Preview Screenshot (placeholder):**
+**Preview Screenshot:**
 
 ![Auto File Organizer Preview](screenshots/preview.png)
-*Place a screenshot here showing the organized folder structure.*
+*Shows organized folder structure after running the tool.*
 
 ---
 
 ## 💡 Why Use This Tool?
 
-* Save time and keep folders clutter-free
+* Save hours of manual file sorting
 * Organize by **file type** or **modification date**
-* Safe file handling — avoids overwriting
-* Dry-run mode to preview changes
+* Safe file handling — avoids overwriting existing files
+* Dry-run mode previews changes before moving files
 * Reset test folders for repeated testing
 * Lightweight, fast, automation-friendly CLI
 
@@ -61,12 +36,12 @@ test_folder/
 
 ## 🎮 Features
 
-* Sort files by **extension** (e.g., `.pdf`, `.jpg`, `.txt`)
+* Sort files by **extension** (`.pdf`, `.jpg`, `.txt`, etc.)
 * Sort files by **modification date** (`YYYY-MM-DD`)
-* Dry-run mode to preview changes
+* Dry-run mode to preview planned moves
 * Reset function to restore original test folder
 * Safe file moves with automatic renaming if conflicts occur
-* Optional integration with GitHub Actions for CI testing
+* Optional CI integration via GitHub Actions
 
 ---
 
@@ -79,10 +54,10 @@ test_folder/
 
 ## 🚀 Installation
 
-Clone the repo and navigate to the tool:
+Clone the repository and navigate to the tool:
 
 ```
-git clone [https://github.com/Johan1974/python-automation-and-tools.git](https://github.com/Johan1974/python-automation-and-tools.git)
+git clone https://github.com/Johan1974/python-automation-and-tools.git
 cd python-automation-and-tools/python-auto-file-organizer
 ```
 
@@ -130,10 +105,10 @@ python3 auto_cleanup.py -s test_folder --reset
 
 GitHub Actions workflow runs on every push:
 
-* Test organization by **extension**
-* Test organization by **date**
-* Reset folder functionality
-* Temporary folder end-to-end validation
+* Validate file organization by **extension**
+* Validate organization by **date**
+* Test reset functionality
+* Full end-to-end validation using a temporary folder
 
 Workflow file: `.github/workflows/python_auto_file_organizer_ci.yml`
 
@@ -141,17 +116,17 @@ Workflow file: `.github/workflows/python_auto_file_organizer_ci.yml`
 
 ## 🤝 Contributing
 
-Contributions are welcome! Examples include:
+Contributions are welcome! Examples:
 
-* Improved file organization logic
-* Enhanced CLI options or logging
-* Additional sorting rules or GUI integration
+* Improve file organization logic
+* Add new CLI options or logging
+* Enhance sorting rules or add GUI integration
 
-1. Fork the repo
+1. Fork the repository
 2. Create a feature branch
 3. Submit a pull request
 
-All PRs run through CI automatically.
+All PRs run automatically through CI.
 
 ---
 
@@ -161,7 +136,7 @@ Planned enhancements:
 
 * Nested folder sorting
 * Custom folder naming rules
-* Logging and reporting of file moves
+* Logging and reporting of moved files
 * Optional GUI interface
 * Web-based Flask/FastAPI version
 * Publish to PyPI (`pip install auto-file-organizer`)
@@ -174,9 +149,9 @@ Need a **custom file automation tool**, organization script, or workflow?
 
 I build:
 
-* File organization and cleanup tools
+* File organization and cleanup utilities
 * Batch automation scripts
-* CLI or web-based file management utilities
+* CLI or web-based file management tools
 
 Contact me via GitHub: **[https://github.com/Johan1974](https://github.com/Johan1974)**
 
@@ -185,6 +160,4 @@ Contact me via GitHub: **[https://github.com/Johan1974](https://github.com/Johan
 ## 📝 License
 
 MIT License — free to use, modify, and distribute
-
-
 
