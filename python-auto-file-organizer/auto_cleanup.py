@@ -141,11 +141,17 @@ def reset_folder(folder: Path):
 
 
 def remove_empty_folders(folder: Path):
+    """Recursively remove empty subfolders."""
+    if not folder.exists():
+        return
     for subfolder in folder.iterdir():
         if subfolder.is_dir():
             remove_empty_folders(subfolder)
-            if not any(subfolder.iterdir()):  # folder is empty
+            if not any(subfolder.iterdir()):
                 subfolder.rmdir()
+                print(f"Removed empty folder: {project_path(subfolder)}")
+                logger.info(f"Removed empty folder: {project_path(subfolder)}")
+
 
 # --- Undo last cleanup ---
 def undo_cleanup(dry_run=False):
@@ -190,7 +196,8 @@ def main():
     # Undo
     if args.undo:
         undo_cleanup(dry_run=args.dry_run)
-        remove_empty_folders(source)
+        if source.exists:
+            remove_empty_folders(source)
         return
 
     # Validate folder
