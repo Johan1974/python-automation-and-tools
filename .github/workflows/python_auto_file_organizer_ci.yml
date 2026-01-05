@@ -18,23 +18,23 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      # Checkout repository
+      # 1️⃣ Checkout repository
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Set up Python
+      # 2️⃣ Set up Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      # Install dependencies (pytest only)
+      # 3️⃣ Install dependencies (pytest only)
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pytest
 
-      # Prepare temp test folder (Linux/macOS)
+      # 4️⃣ Prepare temp test folder (Linux/macOS)
       - name: Prepare temp test folder
         if: runner.os != 'Windows'
         shell: bash
@@ -43,7 +43,7 @@ jobs:
           mkdir -p temp_test_folder
           cp -r python-auto-file-organizer/test_folder/* temp_test_folder/
 
-      # Prepare temp test folder (Windows)
+      # 5️⃣ Prepare temp test folder (Windows)
       - name: Prepare temp test folder (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
@@ -52,74 +52,92 @@ jobs:
           New-Item -ItemType Directory temp_test_folder | Out-Null
           Copy-Item -Path python-auto-file-organizer\test_folder\* -Destination temp_test_folder -Recurse
 
-      # Dry-run: organize by extension
-      - name: Dry-run organize by extension
-        run: |
-          if [[ "${{ runner.os }}" == "Windows" ]]; then
-            python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode extension --dry-run
-          else
-            python3 python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode extension --dry-run
-          fi
+      # 6️⃣ Dry-run: organize by extension (Linux/macOS)
+      - name: Dry-run organize by extension (Linux/macOS)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: python3 python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode extension --dry-run
 
-      # Organize by extension
-      - name: Organize by extension
-        run: |
-          if [[ "${{ runner.os }}" == "Windows" ]]; then
-            python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode extension
-          else
-            python3 python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode extension
-          fi
+      # 7️⃣ Dry-run: organize by extension (Windows)
+      - name: Dry-run organize by extension (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode extension --dry-run
 
-      # Dry-run undo last cleanup
-      - name: Dry-run undo last cleanup
-        run: |
-          if [[ "${{ runner.os }}" == "Windows" ]]; then
-            python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --undo --dry-run
-          else
-            python3 python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --undo --dry-run
-          fi
+      # 8️⃣ Organize by extension (Linux/macOS)
+      - name: Organize by extension (Linux/macOS)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: python3 python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode extension
 
-      # Reset temp test folder
-      - name: Reset temp test folder
-        run: |
-          if [[ "${{ runner.os }}" == "Windows" ]]; then
-            python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --reset
-          else
-            python3 python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --reset
-          fi
+      # 9️⃣ Organize by extension (Windows)
+      - name: Organize by extension (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode extension
 
-      # Organize by date
-      - name: Organize by date
-        run: |
-          if [[ "${{ runner.os }}" == "Windows" ]]; then
-            python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode date
-          else
-            python3 python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode date
-          fi
+      # 🔟 Dry-run undo last cleanup (Linux/macOS)
+      - name: Dry-run undo last cleanup (Linux/macOS)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: python3 python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --undo --dry-run
 
-      # Optional: Dry-run undo by date
-      - name: Dry-run undo by date
-        run: |
-          if [[ "${{ runner.os }}" == "Windows" ]]; then
-            python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --undo --dry-run
-          else
-            python3 python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --undo --dry-run
-          fi
+      # 1️⃣1️⃣ Dry-run undo last cleanup (Windows)
+      - name: Dry-run undo last cleanup (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --undo --dry-run
 
-      # Cleanup temp folder (Linux/macOS)
+      # 1️⃣2️⃣ Reset temp test folder (Linux/macOS)
+      - name: Reset temp test folder (Linux/macOS)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: python3 python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --reset
+
+      # 1️⃣3️⃣ Reset temp test folder (Windows)
+      - name: Reset temp test folder (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --reset
+
+      # 1️⃣4️⃣ Organize by date (Linux/macOS)
+      - name: Organize by date (Linux/macOS)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: python3 python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode date
+
+      # 1️⃣5️⃣ Organize by date (Windows)
+      - name: Organize by date (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode date
+
+      # 1️⃣6️⃣ Dry-run undo by date (Linux/macOS)
+      - name: Dry-run undo by date (Linux/macOS)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: python3 python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --undo --dry-run
+
+      # 1️⃣7️⃣ Dry-run undo by date (Windows)
+      - name: Dry-run undo by date (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --undo --dry-run
+
+      # 1️⃣8️⃣ Cleanup temp folder (Linux/macOS)
       - name: Remove temp test folder (Linux/macOS)
         if: runner.os != 'Windows'
         shell: bash
         run: rm -rf temp_test_folder
 
-      # Cleanup temp folder (Windows)
+      # 1️⃣9️⃣ Cleanup temp folder (Windows)
       - name: Remove temp test folder (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
           if (Test-Path temp_test_folder) { Remove-Item -Recurse -Force temp_test_folder }
 
-      # Upload logs as artifact
+      # 2️⃣0️⃣ Upload logs as artifact
       - name: Upload logs
         if: always()
         uses: actions/upload-artifact@v4
