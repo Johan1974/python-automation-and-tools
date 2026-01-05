@@ -2,119 +2,152 @@
 """
 auto_cleanup.py
 
-A Python script to automatically organize files in a folder
-by extension or modification date, with optional destination folder
-and reset functionality.
+Automatically organize files in a folder by extension or modification date.
 
 Features:
 - Configurable source folder
-- Optional destination folder (safe testing or packaging)
+- Optional destination folder
 - Sort by extension or date
-- Safe file handling to prevent overwriting
+- Safe file handling (no overwrite)
 - Dry-run mode
 - Reset test folder to original sample files
+- Logging for audit & debugging
 """
 
-import os
 import shutil
 from pathlib import Path
 from datetime import datetime
 import argparse
+import logging
 
+# -----------------------------
+# Logging setup
+# -----------------------------
+LOG_DIR = Path("logs")
+LOG_DIR.mkdir(exist_ok=True)
+
+logging.basicConfig(
+    filename=LOG_DIR / "auto_cleanup.log",
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s"
+)
+
+logger = logging.getLogger(__name__)
+
+# -----------------------------
 # Original sample files for reset
+# -----------------------------
 SAMPLE_FILES = ["document.pdf", "photo.jpg", "script.py", "notes.txt", "image.png"]
+
 
 def get_args():
     """Parse CLI arguments."""
     parser = argparse.ArgumentParser(
-        description="Organize files in a folder by extension or date, or reset it."
+        description="Organize files by extension or date, with safety features."
     )
     parser.add_argument(
         "-s", "--source",
-        type=str,
         required=True,
-        help="Path to the source folder to organize"
+        help="Path to the source folder"
     )
     parser.add_argument(
         "-d", "--destination",
-        type=str,
         help="Optional destination folder (default: organize in-place)"
     )
     parser.add_argument(
         "-m", "--mode",
         choices=["extension", "date"],
         default="extension",
-        help="Sorting mode: 'extension' or 'date' (default: extension)"
+        help="Sorting mode (default: extension)"
+    )
+    parser.add_argument(
+        "--exclude",
+        nargs="*",
+        default=[],
+        help="File extensions to ignore (e.g. .exe .tmp)"
     )
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Show what would be done without moving files"
+        help="Preview actions without moving files"
     )
     parser.add_argument(
         "--reset",
         action="store_true",
-        help="Reset the folder to original sample files"
+        help="Reset folder to original sample files"
     )
     return parser.parse_args()
 
-def safe_move(file_path: Path, target_folder: Path, dry_run=False):
-    """Move a file safely, avoiding overwriting by appending a counter."""
+
+def safe_move(file_path: Path, target_folder: Path, dry_run: bool):
+    """Move a file safely, avoiding overwrites."""
     target_folder.mkdir(parents=True, exist_ok=True)
     target_file = target_folder / file_path.name
+
     counter = 1
     while target_file.exists():
         target_file = target_folder / f"{file_path.stem}_{counter}{file_path.suffix}"
         counter += 1
+
     if dry_run:
-        print(f"[Dry Run] Would move: {file_path} -> {target_file}")
+        print(f"[DRY-RUN] {file_path.name} -> {target_file}")
+        logger.info(f"DRY-RUN: {file_path} -> {target_file}")
     else:
         shutil.move(str(file_path), str(target_file))
-        print(f"Moved: {file_path} -> {target_file}")
+        print(f"Moved: {file_path.name} -> {target_file}")
+        logger.info(f"Moved: {file_path} -> {target_file}")
 
-def organize_by_extension(source_folder: Path, destination_folder: Path, dry_run=False):
+
+def should_skip(file: Path, excluded_exts):
+    """Determine whether a file should be skipped."""
+    if file.name.startswith("."):
+        return True
+    if file.suffix.lower() in excluded_exts:
+        logger.info(f"Excluded: {file.name}")
+        return True
+    return False
+
+
+def organize_by_extension(source: Path, destination: Path, dry_run: bool, excluded_exts):
     """Organize files into folders by extension."""
-    for item in source_folder.iterdir():
-        if item.is_file():
+    for item in source.iterdir():
+        if item.is_file() and not should_skip(item, excluded_exts):
             ext = item.suffix[1:] if item.suffix else "no_extension"
-            target_folder = destination_folder / ext
-            safe_move(item, target_folder, dry_run=dry_run)
+            safe_move(item, destination / ext, dry_run)
 
-def organize_by_date(source_folder: Path, destination_folder: Path, dry_run=False):
-    """Organize files into folders by last modification date (YYYY-MM-DD)."""
-    for item in source_folder.iterdir():
-        if item.is_file():
+
+def organize_by_date(source: Path, destination: Path, dry_run: bool, excluded_exts):
+    """Organize files into folders by modification date."""
+    for item in source.iterdir():
+        if item.is_file() and not should_skip(item, excluded_exts):
             mod_time = datetime.fromtimestamp(item.stat().st_mtime)
             date_folder = mod_time.strftime("%Y-%m-%d")
-            target_folder = destination_folder / date_folder
-            safe_move(item, target_folder, dry_run=dry_run)
+            safe_move(item, destination / date_folder, dry_run)
+
 
 def reset_folder(folder: Path):
     """Reset folder to original sample files."""
-    if not folder.exists():
-        folder.mkdir(parents=True)
+    folder.mkdir(parents=True, exist_ok=True)
 
-    # Remove all subfolders
     for item in folder.iterdir():
         if item.is_dir():
             shutil.rmtree(item)
-
-    # Remove unexpected files
-    for item in folder.iterdir():
-        if item.is_file() and item.name not in SAMPLE_FILES:
+        elif item.is_file() and item.name not in SAMPLE_FILES:
             item.unlink()
 
-    # Recreate original sample files
-    for file_name in SAMPLE_FILES:
-        file_path = folder / file_name
-        if not file_path.exists():
-            file_path.touch()
+    for name in SAMPLE_FILES:
+        (folder / name).touch(exist_ok=True)
+
+    logger.warning(f"Folder reset: {folder}")
     print(f"'{folder}' has been reset to original state.")
+
 
 def main():
     args = get_args()
+
     source = Path(args.source)
     destination = Path(args.destination) if args.destination else source
+    excluded_exts = {ext.lower() for ext in args.exclude}
 
     if args.reset:
         reset_folder(source)
@@ -122,12 +155,20 @@ def main():
 
     if not source.exists() or not source.is_dir():
         print(f"Error: '{source}' is not a valid folder")
+        logger.error(f"Invalid source folder: {source}")
         return
 
+    logger.info(
+        f"Started cleanup | mode={args.mode} | dry_run={args.dry_run} | source={source}"
+    )
+
     if args.mode == "extension":
-        organize_by_extension(source, destination, dry_run=args.dry_run)
+        organize_by_extension(source, destination, args.dry_run, excluded_exts)
     else:
-        organize_by_date(source, destination, dry_run=args.dry_run)
+        organize_by_date(source, destination, args.dry_run, excluded_exts)
+
+    logger.info("Cleanup completed")
+
 
 if __name__ == "__main__":
     main()
