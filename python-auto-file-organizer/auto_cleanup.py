@@ -2,29 +2,34 @@
 """
 auto_cleanup.py
 
-Automatically organize files in a folder by extension or modification date.
+A Python script to automatically organize files in a folder
+by extension or modification date, with optional destination folder,
+reset functionality, and undo support.
 
 Features:
 - Configurable source folder
-- Optional destination folder
+- Optional destination folder (safe testing or packaging)
 - Sort by extension or date
-- Safe file handling (no overwrite)
+- Safe file handling to prevent overwriting
 - Dry-run mode
 - Reset test folder to original sample files
-- Logging for audit & debugging
-- Undo last cleanup run
+- Undo last cleanup
+- Logs and prints paths relative to project root
 """
 
+import os
 import shutil
 from pathlib import Path
 from datetime import datetime
 import argparse
 import logging
 
-# -----------------------------
-# Logging setup
-# -----------------------------
-LOG_DIR = Path("logs")
+# --- Project and script paths ---
+SCRIPT_DIR = Path(__file__).parent.resolve()  # /.../python-auto-file-organizer
+HOME_DIR = Path.home()  # /home/johan
+
+# --- Logging setup ---
+LOG_DIR = SCRIPT_DIR / "logs"
 LOG_DIR.mkdir(exist_ok=True)
 
 logging.basicConfig(
@@ -32,206 +37,176 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(message)s"
 )
-
 logger = logging.getLogger(__name__)
 
-# -----------------------------
-# Undo log file
-# -----------------------------
-UNDO_LOG_FILE = LOG_DIR / "undo.log"
+# Undo log
+UNDO_LOG_PATH = LOG_DIR / "undo.log"
 
-# -----------------------------
-# Original sample files for reset
-# -----------------------------
+# Original sample files
 SAMPLE_FILES = ["document.pdf", "photo.jpg", "script.py", "notes.txt", "image.png"]
 
-
-# -----------------------------
-# CLI Arguments
-# -----------------------------
+# --- CLI arguments ---
 def get_args():
-    """Parse CLI arguments."""
     parser = argparse.ArgumentParser(
-        description="Organize files by extension or date, with safety features."
+        description="Organize files in a folder by extension or date, with optional reset and undo."
     )
-    parser.add_argument(
-        "-s", "--source",
-        required=True,
-        help="Path to the source folder"
-    )
-    parser.add_argument(
-        "-d", "--destination",
-        help="Optional destination folder (default: organize in-place)"
-    )
-    parser.add_argument(
-        "-m", "--mode",
-        choices=["extension", "date"],
-        default="extension",
-        help="Sorting mode (default: extension)"
-    )
-    parser.add_argument(
-        "--exclude",
-        nargs="*",
-        default=[],
-        help="File extensions to ignore (e.g. .exe .tmp)"
-    )
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Preview actions without moving files"
-    )
-    parser.add_argument(
-        "--reset",
-        action="store_true",
-        help="Reset folder to original sample files"
-    )
-    parser.add_argument(
-        "--undo",
-        action="store_true",
-        help="Revert the last cleanup run"
-    )
+    parser.add_argument("-s", "--source", type=str, required=True,
+                        help="Path to the source folder to organize")
+    parser.add_argument("-d", "--destination", type=str,
+                        help="Optional destination folder (default: organize in-place)")
+    parser.add_argument("-m", "--mode", choices=["extension", "date"], default="extension",
+                        help="Sorting mode: 'extension' or 'date' (default: extension)")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="Show what would be done without moving files")
+    parser.add_argument("--reset", action="store_true",
+                        help="Reset the folder to original sample files")
+    parser.add_argument("--undo", action="store_true",
+                        help="Undo the last cleanup")
     return parser.parse_args()
 
+# --- Helper: print paths relative to project root ---
+def project_path(path: Path):
+    """Return path starting from project folder, with leading slash."""
+    try:
+        relative = path.resolve().relative_to(HOME_DIR)
+        return Path("/" + str(relative))
+    except ValueError:
+        return path  # fallback
 
-# -----------------------------
-# Core Functions
-# -----------------------------
-def log_undo_move(src: Path, dest: Path):
-    """Log a move for possible undo."""
-    with UNDO_LOG_FILE.open("a") as f:
-        f.write(f"{src}|{dest}\n")
-
-
-def safe_move(file_path: Path, target_folder: Path, dry_run: bool):
-    """Move a file safely, avoiding overwrites."""
+# --- Safe move with undo support ---
+def safe_move(file_path: Path, target_folder: Path, dry_run=False):
+    """Move a file safely, avoiding overwriting by appending a counter.
+    Record move in undo log if not dry-run."""
     target_folder.mkdir(parents=True, exist_ok=True)
     target_file = target_folder / file_path.name
-
     counter = 1
     while target_file.exists():
         target_file = target_folder / f"{file_path.stem}_{counter}{file_path.suffix}"
         counter += 1
 
     if dry_run:
-        print(f"[DRY-RUN] {file_path.name} -> {target_file}")
-        logger.info(f"DRY-RUN: {file_path} -> {target_file}")
+        print(f"[DRY-RUN] {project_path(file_path)} -> {project_path(target_file)}")
+        logger.info(f"DRY-RUN: {project_path(file_path)} -> {project_path(target_file)}")
     else:
         shutil.move(str(file_path), str(target_file))
-        print(f"Moved: {file_path.name} -> {target_file}")
-        logger.info(f"Moved: {file_path} -> {target_file}")
-        log_undo_move(file_path, target_file)
+        print(f"Moved: {project_path(file_path)} -> {project_path(target_file)}")
+        logger.info(f"Moved: {project_path(file_path)} -> {project_path(target_file)}")
+        # Record for undo
+        with open(UNDO_LOG_PATH, "a") as f:
+            f.write(f"{target_file}|{file_path}\n")  # target_file -> original location
 
-
-def should_skip(file: Path, excluded_exts):
-    """Determine whether a file should be skipped."""
-    if file.name.startswith("."):
-        return True
-    if file.suffix.lower() in excluded_exts:
-        logger.info(f"Excluded: {file.name}")
-        return True
-    return False
-
-
-def organize_by_extension(source: Path, destination: Path, dry_run: bool, excluded_exts):
-    """Organize files into folders by extension."""
-    for item in source.iterdir():
-        if item.is_file() and not should_skip(item, excluded_exts):
+# --- Organize functions ---
+def organize_by_extension(source_folder: Path, destination_folder: Path, dry_run=False):
+    for item in source_folder.iterdir():
+        if item.is_file():
             ext = item.suffix[1:] if item.suffix else "no_extension"
-            safe_move(item, destination / ext, dry_run)
+            target_folder = destination_folder / ext
+            safe_move(item, target_folder, dry_run=dry_run)
 
-
-def organize_by_date(source: Path, destination: Path, dry_run: bool, excluded_exts):
-    """Organize files into folders by modification date."""
-    for item in source.iterdir():
-        if item.is_file() and not should_skip(item, excluded_exts):
+def organize_by_date(source_folder: Path, destination_folder: Path, dry_run=False):
+    for item in source_folder.iterdir():
+        if item.is_file():
             mod_time = datetime.fromtimestamp(item.stat().st_mtime)
             date_folder = mod_time.strftime("%Y-%m-%d")
-            safe_move(item, destination / date_folder, dry_run)
+            target_folder = destination_folder / date_folder
+            safe_move(item, target_folder, dry_run=dry_run)
 
-
+# --- Reset folder ---
 def reset_folder(folder: Path):
-    """Reset folder to original sample files."""
-    folder.mkdir(parents=True, exist_ok=True)
+    if not folder.exists():
+        folder.mkdir(parents=True)
 
+    # Remove all subfolders
     for item in folder.iterdir():
         if item.is_dir():
             shutil.rmtree(item)
-        elif item.is_file() and item.name not in SAMPLE_FILES:
+
+    # Remove unexpected files
+    for item in folder.iterdir():
+        if item.is_file() and item.name not in SAMPLE_FILES:
             item.unlink()
 
-    for name in SAMPLE_FILES:
-        (folder / name).touch(exist_ok=True)
+    # Recreate original sample files
+    for file_name in SAMPLE_FILES:
+        file_path = folder / file_name
+        if not file_path.exists():
+            file_path.touch()
 
-    logger.warning(f"Folder reset: {folder}")
-    print(f"'{folder}' has been reset to original state.")
+    # Clear undo log
+    if UNDO_LOG_PATH.exists():
+        UNDO_LOG_PATH.unlink()
+
+    print(f"'{project_path(folder)}' has been reset to original state.")
+    logger.info(f"Reset folder: {project_path(folder)}")
 
 
-def undo_last_run(dry_run=False):
-    """Revert all moves from the last cleanup run."""
-    if not UNDO_LOG_FILE.exists():
+def remove_empty_folders(folder: Path):
+    for subfolder in folder.iterdir():
+        if subfolder.is_dir():
+            remove_empty_folders(subfolder)
+            if not any(subfolder.iterdir()):  # folder is empty
+                subfolder.rmdir()
+
+# --- Undo last cleanup ---
+def undo_cleanup(dry_run=False):
+    if not UNDO_LOG_PATH.exists():
         print("No undo history found.")
+        logger.info("Undo attempted but no history found.")
         return
 
-    lines = UNDO_LOG_FILE.read_text().splitlines()
-    if not lines:
-        print("Undo log is empty.")
-        return
+    with open(UNDO_LOG_PATH, "r") as f:
+        lines = [line.strip() for line in f.readlines()]
 
-    print("Undoing last cleanup run...")
-    for line in reversed(lines):
-        try:
-            src_str, dest_str = line.split("|")
-            src, dest = Path(src_str), Path(dest_str)
-            if dest.exists():
-                if dry_run:
-                    print(f"[DRY-RUN] Would move: {dest} -> {src}")
-                else:
-                    src.parent.mkdir(parents=True, exist_ok=True)
-                    shutil.move(str(dest), str(src))
-                    print(f"Restored: {dest.name} -> {src}")
-            else:
-                print(f"Skipped (destination missing): {dest}")
-        except Exception as e:
-            print(f"Error undoing move {line}: {e}")
-    if not dry_run:
-        UNDO_LOG_FILE.unlink()
-        print("Undo completed and log cleared.")
+    for line in reversed(lines):  # reverse order to prevent conflicts
+        target_str, original_str = line.split("|")
+        target_path = Path(target_str)
+        original_path = Path(original_str)
 
+        if target_path.exists() or dry_run:
+            if not dry_run:
+                original_path.parent.mkdir(parents=True, exist_ok=True)
+                shutil.move(str(target_path), str(original_path))
+            print(f"{'[DRY-RUN] ' if dry_run else 'Undo: '} {project_path(target_path)} -> {project_path(original_path)}")
+            logger.info(f"{'DRY-RUN: ' if dry_run else 'Undo: '} {project_path(target_path)} -> {project_path(original_path)}")
 
-# -----------------------------
-# Main
-# -----------------------------
+    if not dry_run and UNDO_LOG_PATH.exists():
+        UNDO_LOG_PATH.unlink()
+        print("Undo completed.")
+        logger.info("Undo completed and log cleared.")
+
+# --- Main ---
 def main():
     args = get_args()
 
-    source = Path(args.source)
-    destination = Path(args.destination) if args.destination else source
-    excluded_exts = {ext.lower() for ext in args.exclude}
+    # Resolve absolute paths
+    source = (Path(args.source) if Path(args.source).is_absolute() else SCRIPT_DIR / args.source).resolve()
+    destination = (Path(args.destination) if args.destination else source).resolve()
 
+    # Reset
     if args.reset:
         reset_folder(source)
         return
 
+    # Undo
     if args.undo:
-        undo_last_run(dry_run=args.dry_run)
+        undo_cleanup(dry_run=args.dry_run)
+        remove_empty_folders(source)
         return
 
+    # Validate folder
     if not source.exists() or not source.is_dir():
         print(f"Error: '{source}' is not a valid folder")
-        logger.error(f"Invalid source folder: {source}")
         return
 
-    logger.info(
-        f"Started cleanup | mode={args.mode} | dry_run={args.dry_run} | source={source}"
-    )
+    logger.info(f"Started cleanup | mode={args.mode} | dry_run={args.dry_run} | source={source}")
 
+    # Perform cleanup
     if args.mode == "extension":
-        organize_by_extension(source, destination, args.dry_run, excluded_exts)
+        organize_by_extension(source, destination, dry_run=args.dry_run)
     else:
-        organize_by_date(source, destination, args.dry_run, excluded_exts)
+        organize_by_date(source, destination, dry_run=args.dry_run)
 
     logger.info("Cleanup completed")
-
 
 if __name__ == "__main__":
     main()
