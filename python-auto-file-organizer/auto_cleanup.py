@@ -12,6 +12,7 @@ Features:
 - Dry-run mode
 - Reset test folder to original sample files
 - Logging for audit & debugging
+- Undo last cleanup run
 """
 
 import shutil
@@ -35,11 +36,19 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # -----------------------------
+# Undo log file
+# -----------------------------
+UNDO_LOG_FILE = LOG_DIR / "undo.log"
+
+# -----------------------------
 # Original sample files for reset
 # -----------------------------
 SAMPLE_FILES = ["document.pdf", "photo.jpg", "script.py", "notes.txt", "image.png"]
 
 
+# -----------------------------
+# CLI Arguments
+# -----------------------------
 def get_args():
     """Parse CLI arguments."""
     parser = argparse.ArgumentParser(
@@ -76,7 +85,21 @@ def get_args():
         action="store_true",
         help="Reset folder to original sample files"
     )
+    parser.add_argument(
+        "--undo",
+        action="store_true",
+        help="Revert the last cleanup run"
+    )
     return parser.parse_args()
+
+
+# -----------------------------
+# Core Functions
+# -----------------------------
+def log_undo_move(src: Path, dest: Path):
+    """Log a move for possible undo."""
+    with UNDO_LOG_FILE.open("a") as f:
+        f.write(f"{src}|{dest}\n")
 
 
 def safe_move(file_path: Path, target_folder: Path, dry_run: bool):
@@ -96,6 +119,7 @@ def safe_move(file_path: Path, target_folder: Path, dry_run: bool):
         shutil.move(str(file_path), str(target_file))
         print(f"Moved: {file_path.name} -> {target_file}")
         logger.info(f"Moved: {file_path} -> {target_file}")
+        log_undo_move(file_path, target_file)
 
 
 def should_skip(file: Path, excluded_exts):
@@ -142,6 +166,41 @@ def reset_folder(folder: Path):
     print(f"'{folder}' has been reset to original state.")
 
 
+def undo_last_run(dry_run=False):
+    """Revert all moves from the last cleanup run."""
+    if not UNDO_LOG_FILE.exists():
+        print("No undo history found.")
+        return
+
+    lines = UNDO_LOG_FILE.read_text().splitlines()
+    if not lines:
+        print("Undo log is empty.")
+        return
+
+    print("Undoing last cleanup run...")
+    for line in reversed(lines):
+        try:
+            src_str, dest_str = line.split("|")
+            src, dest = Path(src_str), Path(dest_str)
+            if dest.exists():
+                if dry_run:
+                    print(f"[DRY-RUN] Would move: {dest} -> {src}")
+                else:
+                    src.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.move(str(dest), str(src))
+                    print(f"Restored: {dest.name} -> {src}")
+            else:
+                print(f"Skipped (destination missing): {dest}")
+        except Exception as e:
+            print(f"Error undoing move {line}: {e}")
+    if not dry_run:
+        UNDO_LOG_FILE.unlink()
+        print("Undo completed and log cleared.")
+
+
+# -----------------------------
+# Main
+# -----------------------------
 def main():
     args = get_args()
 
@@ -151,6 +210,10 @@ def main():
 
     if args.reset:
         reset_folder(source)
+        return
+
+    if args.undo:
+        undo_last_run(dry_run=args.dry_run)
         return
 
     if not source.exists() or not source.is_dir():
