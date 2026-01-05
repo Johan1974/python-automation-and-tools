@@ -18,7 +18,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      # Checkout repository
+      # Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -28,23 +28,47 @@ jobs:
         with:
           python-version: "3.11"
 
-      # Install dependencies
+      # Install pytest for testing
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pytest
 
-      # Read project version (cross-platform using bash) and print it
+      # Read project version from VERSION file
       - name: Read project version
-        id: version
         shell: bash
         run: |
           VERSION=$(cat python-auto-file-organizer/VERSION)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "📌 Project version: $VERSION"
 
+      # Update README with current version (Linux/macOS)
+      - name: Update README Version (Unix)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          README=python-auto-file-organizer/README.MD
+          if grep -q "^\\*\\*📌 Current Version:\\*\\*" "$README"; then
+              sed -i "s/^\\*\\*📌 Current Version:\\*\\*.*/**📌 Current Version:** $VERSION/" "$README"
+          else
+              sed -i "/^# Python Auto File Organizer 🗂️🐍/a **📌 Current Version:** $VERSION" "$README"
+          fi
+          echo "README updated to version $VERSION"
 
-      # Prepare temp test folder (Linux/macOS)
+      # Update README with current version (Windows)
+      - name: Update README Version (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $version = Get-Content python-auto-file-organizer/VERSION
+          $readme = "python-auto-file-organizer/README.MD"
+          (Get-Content $readme) |
+            ForEach-Object {
+              if ($_ -match "^\*\*📌 Current Version:\*\*") { "**📌 Current Version:** $version" } else { $_ }
+            } | Set-Content $readme
+          Write-Host "README updated to version $version"
+
+      # Prepare temporary test folder (Linux/macOS)
       - name: Prepare temp test folder
         if: runner.os != 'Windows'
         shell: bash
@@ -53,7 +77,7 @@ jobs:
           mkdir -p temp_test_folder
           cp -r python-auto-file-organizer/test_folder/* temp_test_folder/
 
-      # Prepare temp test folder (Windows)
+      # Prepare temporary test folder (Windows)
       - name: Prepare temp test folder (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
@@ -62,7 +86,7 @@ jobs:
           New-Item -ItemType Directory temp_test_folder | Out-Null
           Copy-Item -Path python-auto-file-organizer\test_folder\* -Destination temp_test_folder -Recurse
 
-      # Dry-run: extension
+      # Dry-run: organize by extension
       - name: Dry-run organize by extension
         run: |
           python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode extension --dry-run
@@ -72,7 +96,12 @@ jobs:
         run: |
           python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode extension
 
-      # Reset temp folder
+      # Undo last cleanup (dry-run)
+      - name: Undo last cleanup (dry-run)
+        run: |
+          python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --undo --dry-run
+
+      # Reset temp test folder
       - name: Reset temp test folder
         run: |
           python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --reset
@@ -82,24 +111,28 @@ jobs:
         run: |
           python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --mode date
 
-      # Cleanup temp folder (Linux/macOS)
-      - name: Remove temp test folder
+      # Undo last cleanup (real)
+      - name: Undo last cleanup
+        run: |
+          python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --undo
+
+      # Cleanup temporary folder (Linux/macOS)
+      - name: Remove temp test folder (Unix)
         if: runner.os != 'Windows'
         shell: bash
         run: rm -rf temp_test_folder
 
-      # Cleanup temp folder (Windows)
+      # Cleanup temporary folder (Windows)
       - name: Remove temp test folder (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
           if (Test-Path temp_test_folder) { Remove-Item -Recurse -Force temp_test_folder }
 
-      # Upload logs with version in artifact name (skip if no files)
+      # Upload logs artifact with version
       - name: Upload cleanup logs
         uses: actions/upload-artifact@v4
         with:
           name: cleanup-logs-${{ env.VERSION }}
           path: python-auto-file-organizer/logs/
           overwrite: true
-          if-no-files-found: warn

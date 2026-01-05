@@ -1,11 +1,11 @@
 # Python Auto File Organizer 🗂️🐍 — Automatic Folder Sorting CLI
 
+![Version](https://img.shields.io/badge/version-1.0.0-blue)
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green)
 ![CI](https://github.com/Johan1974/python-automation-and-tools/actions/workflows/python_auto_file_organizer_ci.yml/badge.svg)
 
-**Python Auto File Organizer** is a lightweight Python CLI tool to **automatically organize files** in any folder by **file type (extension)** or **modification date**.
-Keep your **downloads, project folders, or shared directories** clutter-free without manual effort. Ideal for **developers, data analysts, freelancers, and productivity enthusiasts**.
+**Python Auto File Organizer** is a lightweight CLI tool to **automatically organize files** by **extension** or **modification date**, keeping folders tidy and clutter-free.
 
 **GitHub Repository:** [Python Automation & Tools — Auto File Organizer](https://github.com/Johan1974/python-automation-and-tools/tree/main/python-auto-file-organizer)
 
@@ -16,16 +16,19 @@ Keep your **downloads, project folders, or shared directories** clutter-free wit
 **Original folder (`test_folder/`):**
 
 ```
+
 document.pdf
 image.png
 notes.txt
 photo.jpg
 script.py
+
 ```
 
 **Organized by extension:**
 
 ```
+
 jpg/
 └── photo.jpg
 pdf/
@@ -36,32 +39,36 @@ py/
 └── script.py
 txt/
 └── notes.txt
+
 ```
 
 **Organized by date (`YYYY-MM-DD` folders):**
 
 ```
+
 2026-01-02/
 ├── document.pdf
 ├── image.png
 ├── notes.txt
 ├── photo.jpg
 └── script.py
-```
+
+````
 
 ![Auto File Organizer Preview](screenshots/preview.png)
 
 ---
 
-## 💡 Benefits of Using This Tool
+## 💡 Key Benefits
 
-* ✅ **Save time** — automate manual folder cleanup
-* ✅ **Reduce clutter** — organize large download or project folders quickly
-* ✅ **Flexible sorting** — by **file type** or **last modification date**
-* ✅ **Safe handling** — avoids overwriting files
-* ✅ **Dry-run mode** — preview changes before applying
-* ✅ **Repeatable testing** — reset folders with a single command
-* ✅ **Cross-platform** — works on **Windows, macOS, and Linux**
+* ✅ Save time — automate folder cleanup
+* ✅ Reduce clutter — organize large folders quickly
+* ✅ Flexible sorting — by **file type** or **last modification date**
+* ✅ Safe handling — avoids overwriting files
+* ✅ Dry-run mode — preview changes before applying
+* ✅ Reset test folders — restore initial state
+* ✅ Undo last cleanup
+* ✅ Cross-platform — Windows, macOS, Linux
 
 ---
 
@@ -71,15 +78,16 @@ txt/
 * Organize by **modification date** (`YYYY-MM-DD`)
 * **Dry-run mode** to preview changes
 * **Reset function** to restore original test folder
+* **Undo last cleanup**
 * **Safe file moves** with automatic renaming to prevent conflicts
-* **Lightweight CLI** with optional CI integration for automated testing
+* Lightweight CLI with optional **CI integration** for automated testing
 
 ---
 
 ## 🛠 Requirements
 
 * Python 3.8+
-* No additional Python packages required
+* No additional packages required
 
 ---
 
@@ -88,7 +96,7 @@ txt/
 ```bash
 git clone https://github.com/Johan1974/python-automation-and-tools.git
 cd python-automation-and-tools/python-auto-file-organizer
-```
+````
 
 ---
 
@@ -118,6 +126,12 @@ python3 auto_cleanup.py -s test_folder --mode date
 python3 auto_cleanup.py -s test_folder --reset
 ```
 
+### ↩️ Undo Last Cleanup
+
+```bash
+python3 auto_cleanup.py -s test_folder --undo
+```
+
 ---
 
 ## 🧪 Running Tests Locally
@@ -126,26 +140,8 @@ python3 auto_cleanup.py -s test_folder --reset
 python3 auto_cleanup.py -s test_folder --mode extension --dry-run
 python3 auto_cleanup.py -s test_folder --mode date --dry-run
 python3 auto_cleanup.py -s test_folder --reset
+python3 auto_cleanup.py -s test_folder --undo --dry-run
 ```
-
----
-
-## ❓ FAQ
-
-**Q1: Can I organize folders with thousands of files?**
-Yes — the script handles large folders efficiently and safely, with automatic renaming to prevent overwrites.
-
-**Q2: Will it work on Windows, macOS, and Linux?**
-Yes — fully cross-platform.
-
-**Q3: Can I customize folder names?**
-Currently it uses **extensions** or **modification dates**, but the roadmap includes **custom folder rules**.
-
-**Q4: What if files have no extensions?**
-They are placed in a folder named `no_extension`.
-
-**Q5: Can I preview before moving files?**
-Yes — use `--dry-run` mode to see exactly what will happen.
 
 ---
 
@@ -156,6 +152,7 @@ GitHub Actions automatically tests:
 * Organizing by extension
 * Organizing by date
 * Resetting test folder
+* Undo operations
 * Temporary folder validation
 
 Workflow file: `.github/workflows/python_auto_file_organizer_ci.yml`
@@ -166,15 +163,11 @@ Workflow file: `.github/workflows/python_auto_file_organizer_ci.yml`
 
 Enhancements, bug fixes, and feature requests are welcome:
 
-* Improved organization logic
-* Additional CLI options or logging
-* Nested folder sorting or GUI integration
-
-1. Fork the repo
+1. Fork the repository
 2. Create a feature branch
 3. Submit a pull request
 
-All PRs are automatically validated with CI.
+All PRs are validated automatically via CI.
 
 ---
 
@@ -199,4 +192,3 @@ Contact via GitHub: **[https://github.com/Johan1974](https://github.com/Johan197
 ## 📝 License
 
 MIT License — free to use, modify, and distribute
-
