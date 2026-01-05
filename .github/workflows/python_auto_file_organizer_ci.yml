@@ -34,13 +34,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest
 
-      # Read project version (cross-platform using bash)
+      # Read project version (cross-platform using bash) and print it
       - name: Read project version
         id: version
         shell: bash
         run: |
           VERSION=$(cat python-auto-file-organizer/VERSION)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "📌 Project version: $VERSION"
+
 
       # Prepare temp test folder (Linux/macOS)
       - name: Prepare temp test folder
