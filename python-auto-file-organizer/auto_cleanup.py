@@ -24,9 +24,16 @@ from datetime import datetime
 import argparse
 import logging
 
+from pathlib import Path
+
 # --- Project and script paths ---
 SCRIPT_DIR = Path(__file__).parent.resolve()  # /.../python-auto-file-organizer
 HOME_DIR = Path.home()  # /home/johan
+
+# Read project version from VERSION file
+VERSION_FILE = SCRIPT_DIR / "VERSION"
+VERSION = VERSION_FILE.read_text().strip() if VERSION_FILE.exists() else "0.0.0"
+
 
 # --- Logging setup ---
 LOG_DIR = SCRIPT_DIR / "logs"
