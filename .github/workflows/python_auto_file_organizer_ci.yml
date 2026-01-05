@@ -101,4 +101,28 @@ jobs:
       - name: Dry-run undo by date
         run: |
           if [[ "${{ runner.os }}" == "Windows" ]]; then
-            py
+            python python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --undo --dry-run
+          else
+            python3 python-auto-file-organizer/auto_cleanup.py -s temp_test_folder --undo --dry-run
+          fi
+
+      # Cleanup temp folder (Linux/macOS)
+      - name: Remove temp test folder (Linux/macOS)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: rm -rf temp_test_folder
+
+      # Cleanup temp folder (Windows)
+      - name: Remove temp test folder (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          if (Test-Path temp_test_folder) { Remove-Item -Recurse -Force temp_test_folder }
+
+      # Upload logs as artifact
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cleanup-logs
+          path: python-auto-file-organizer/logs/
